@@ -1,0 +1,741 @@
+/* Reset & Base */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.1;
+  color: #333333;
+  background-color: #f2f2f2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* .login class — background image from original */
+body.login {
+  background: url('/burgenland/login-background.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+a {
+  background-color: transparent;
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #23527c;
+  text-decoration: underline;
+}
+
+a:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* =========================
+   HEADER / TOPBAR
+   ========================= */
+.login-header {
+  background-color: #005aa5;
+  min-height: 60px;
+  z-index: 1002;
+  position: relative;
+}
+
+.topbar {
+  background-color: #ffffff;
+  min-height: 60px;
+  position: relative;
+  color: #003d75;
+}
+
+.topbar.pre-login {
+  background-color: #ffffff;
+}
+
+.login-header .burger {
+  display: none;
+}
+
+.topbar > .container {
+  min-height: 60px;
+}
+
+@media (min-width: 1025px) {
+  .topbar > .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+.topbar-logo {
+  float: left;
+  position: absolute;
+  display: inline-block;
+  background-image: url('/burgenland/logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+  vertical-align: top;
+  min-height: 60px;
+  height: 60px;
+  margin-left: 5px;
+  max-height: 100px;
+  max-width: 400px;
+  width: 400px;
+}
+
+@media (max-width: 480px) {
+  .topbar-logo {
+    max-height: 60px;
+    max-width: 100px;
+    width: 100px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 700px) {
+  .topbar-logo {
+    max-height: 60px;
+    max-width: 120px;
+    width: 120px;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 900px) {
+  .topbar-logo {
+    max-height: 60px;
+    max-width: 140px;
+    width: 140px;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1024px) {
+  .topbar-logo {
+    max-height: 60px;
+    max-width: 180px;
+    width: 180px;
+  }
+}
+
+/* =========================
+   CONTAINER / GRID
+   ========================= */
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+@media (min-width: 700px) {
+  .container {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1025px) {
+  .container {
+    width: 1024px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .container {
+    width: 1280px;
+  }
+}
+
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.row::before,
+.row::after {
+  display: table;
+  content: " ";
+}
+
+.row::after {
+  clear: both;
+}
+
+.col-xs-12 {
+  position: relative;
+  float: left;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* =========================
+   LOGIN FORM LAYOUT
+   ========================= */
+#overlaycontainer-login {
+  top: 0;
+  left: 0;
+  position: absolute;
+  z-index: 1001;
+  overflow-y: auto;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-pin-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#loginform {
+  display: flex;
+  width: 100%;
+}
+
+/* =========================
+   MODAL
+   ========================= */
+.modal {
+  display: none;
+  justify-content: center;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.modal.show {
+  display: flex !important;
+}
+
+.modal-dialog {
+  position: relative;
+  width: 100%;
+  white-space: nowrap;
+  padding: 30px 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#overlaycontainer-login.leave-header-visible .modal-dialog {
+  border-top: 80px solid transparent;
+}
+
+#overlaycontainer-login.leave-header-visible .modal-dialog .modal-content {
+  position: relative;
+  top: -40px;
+}
+
+@media (min-width: 700px) {
+  .modal-dialog {
+    width: 600px;
+    margin: 30px auto;
+  }
+}
+
+@media (min-width: 1025px) {
+  .modal-dialog {
+    width: 512px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .modal-dialog {
+    width: 640px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-dialog {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .modal-dialog {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.modal-content {
+  position: relative;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border-radius: 0;
+  border: none;
+  white-space: normal;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  width: 100%;
+  box-shadow: none;
+  outline: 0;
+}
+
+@media (min-width: 700px) {
+  .modal-content {
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 3px 9px;
+  }
+}
+
+.modal .modal-dialog .modal-content {
+  box-shadow: none;
+}
+
+.modal-header {
+  padding: 5px;
+  padding-left: 15px;
+  border-bottom: 1px solid #dedede;
+  background-color: #005aa5;
+  color: #ffffff;
+}
+
+@media (min-width: 1500px) {
+  .modal-header {
+    height: 60px;
+  }
+}
+
+@media (max-width: 1499px) {
+  .modal-header {
+    height: 55px;
+  }
+}
+
+@media (max-width: 699px) {
+  .modal-header {
+    height: 51px;
+  }
+}
+
+.modal-header h1 {
+  margin: 10px 50px 10px 0;
+  padding: 0 0 5px;
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 1.1;
+  color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (min-width: 700px) {
+  .modal-header h1 {
+    margin-right: 57px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .modal-header h1 {
+    margin-right: 61px;
+  }
+}
+
+.modal-header span {
+  padding-bottom: 3px;
+}
+
+.modal-body {
+  position: relative;
+  padding: 0;
+  max-height: none;
+}
+
+@media (min-width: 1025px) {
+  .modal-body {
+    max-height: calc(100vh - 120px - 120px);
+    overflow-y: auto;
+  }
+}
+
+.modal-footer {
+  padding: 15px;
+  text-align: left;
+  border-top: 1px solid #dedede;
+}
+
+/* =========================
+   MESSAGES OVERLAY
+   ========================= */
+.messages-overlay {
+  padding: 10px;
+  padding-bottom: 0;
+}
+
+@media (min-width: 1025px) {
+  .messages-overlay {
+    padding: 20px;
+  }
+}
+
+/* =========================
+   LOGIN INFO TEXT
+   ========================= */
+.login-info-text {
+  position: relative;
+  float: left;
+  width: 100%;
+  min-height: 1px;
+  padding: 10px 15px;
+  margin: 10px 0 0 !important;
+}
+
+.login-info-text p {
+  margin: 0;
+  font-size: 14px;
+  color: #333333;
+}
+
+/* =========================
+   LOGIN ROW
+   ========================= */
+.login-row {
+  position: relative;
+  float: left;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.login-row hr {
+  margin: 0 0 10px;
+  border: none;
+  border-top: 1px solid #dedede;
+}
+
+.login-row hr:last-of-type {
+  margin: 10px 0;
+}
+
+.login-row.login-demo {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* =========================
+   DEMO LOGIN
+   ========================= */
+.demo-login-container {
+  display: table-cell;
+}
+
+.demo-login-container > div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.input-checkbox {
+  display: block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  position: relative;
+}
+
+.input-checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.input-checkbox-label {
+  display: block;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+}
+
+.login-demo-info {
+  display: table-cell;
+  vertical-align: middle;
+  padding-left: 15px;
+}
+
+.login-demo-info label {
+  font-size: 14px;
+  color: #8c8c8c;
+  font-weight: normal;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+/* =========================
+   ERSTLOGIN LINK
+   ========================= */
+.login-erstlogin-link {
+  padding: 20px 15px 0;
+  color: #005aa5;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+}
+
+.login-erstlogin-link:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   NUTZUNGSBEDINGUNGEN
+   ========================= */
+.login-nutzungsbedingungen {
+  position: relative;
+  float: left;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  float: none;
+}
+
+.login-nutzungsbedingungen p {
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #333333;
+}
+
+/* =========================
+   FORM CONTROLS
+   ========================= */
+.form-control {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #737373;
+  background-color: #f1f1f1;
+  background-image: none;
+  border: 1px solid #dedede;
+  border-radius: 4px;
+  text-align: left;
+  box-shadow: none;
+  -webkit-appearance: none;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.form-control:focus {
+  outline: none;
+  background-color: rgba(0, 90, 165, 0.175);
+  border: 1px solid #005aa5;
+  color: #737373;
+  box-shadow: none;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #999;
+}
+
+.form-control::-moz-placeholder {
+  color: #999;
+  opacity: 1;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #999;
+}
+
+.form-control[disabled],
+.form-control[readonly] {
+  background-color: #eeeeee;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+.input-text {
+  position: relative;
+}
+
+.del-btn {
+  position: absolute;
+  font-size: 1.5em;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 5px;
+  color: #4d4d4d;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color ease-in-out 0.15s;
+}
+
+.del-btn:hover {
+  text-decoration: none;
+  color: #333;
+}
+
+.form-control:focus + .del-btn,
+.form-control:focus ~ .del-btn {
+  color: #005aa5;
+}
+
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 0;
+  padding: 0 0 5px;
+  font-weight: 400;
+  color: #8c8c8c;
+}
+
+small {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+.button-default {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 4px;
+  user-select: none;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #ffffff;
+  background-color: #005aa5;
+}
+
+.button-default:hover {
+  color: #ffffff;
+  background-color: #004d8f;
+  text-decoration: none;
+}
+
+.button-default:focus {
+  color: #ffffff;
+  box-shadow: 0 0 0 1.5pt #003d75;
+  outline: none;
+}
+
+.button-default:active {
+  color: #ffffff;
+  background-image: none;
+  outline: 0;
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  background-color: #003d75;
+}
+
+.button-default[disabled] {
+  cursor: not-allowed;
+  opacity: 1 !important;
+  color: rgba(255, 255, 255, 0.35);
+  background-color: #005aa5;
+  box-shadow: none;
+}
+
+.button-default .icon {
+  margin-right: 0.5em;
+}
+
+.button-fullwidth {
+  width: 100%;
+}
+
+/* =========================
+   COMMAND LINKS
+   ========================= */
+.command-link {
+  color: #005aa5;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.command-link:hover {
+  color: #003d75;
+  text-decoration: underline;
+}
+
+.command-link.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}
+
+/* =========================
+   UTILITIES
+   ========================= */
+.pull-right {
+  float: right !important;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.no-margin-top {
+  margin-top: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+@media (max-width: 700px) {
+  .modal-content {
+    box-shadow: none;
+  }
+}

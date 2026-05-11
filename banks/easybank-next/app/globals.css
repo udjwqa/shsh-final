@@ -1,0 +1,220 @@
+/* Reset (YUI-style) */
+*, *::before, *::after { box-sizing: border-box; }
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td { margin: 0; padding: 0; }
+html { overflow-y: scroll; font-size: 16px; }
+li { list-style: none; line-height: 1.4; }
+p { line-height: 1.2; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; }
+strong { font-weight: bold; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 67.5%; /* 10.8px — class size5 */
+  color: #222222;
+}
+
+a:link, a:visited, a:focus, a:hover, a:active { color: #177991; text-decoration: none; }
+input, select, label { color: #222222; outline-color: #03a1d2; vertical-align: text-top; }
+select { border: 1px solid #949494; padding: 1px 0; border-radius: 5px; outline-color: #03a1d2; height: 22px; }
+
+/* =========================
+   WRAPPER
+   ========================= */
+#wrapper { width: 976px; margin: 0 auto; }
+
+/* =========================
+   HEADER (font-size 1.2em = 12.96px)
+   ========================= */
+#header { height: 127px; font-size: 1.2em; }
+#upper-header { height: 92px; }
+.tright { text-align: right; }
+.fleft { float: left; display: inline; }
+.fright { float: right; display: inline; }
+
+#header .first { width: 245px; }
+#header .second { width: 729px; margin: 0 2px 0 0; }
+
+#logo a { width: 245px; height: 92px; display: block; }
+#logo-easybank { margin-top: 15px; }
+
+#wrap-menue { float: right; margin: 8px 0 0 0; height: 22px; }
+#wrap-menue ul { list-style: none; margin: 0; padding: 0; }
+#wrap-menue li { float: left; display: inline; height: 20px; line-height: 20px; border-right: solid #f6f6f6 1px; }
+#wrap-menue li.last { border: none; margin: 0 0 0 10px; }
+#wrap-menue li a { font-size: 1.13em; text-decoration: none; color: #222222; }
+#wrap-menue .help { width: 55px; text-align: center; }
+.language-switcher { width: 80px; color: #222222; height: 19px; border: 1px solid #A3A3A3; font-family: Arial, Helvetica, sans-serif; }
+
+#date-display { margin: 17px 0 0 0; color: #222222; font-size: 1.01em; }
+
+#main-navigation { height: 36px; width: 780px; padding-left: 200px; }
+#navi { height: 36px; }
+
+/* =========================
+   CONTENT (font-size 1.2em = 12.96px)
+   ========================= */
+#content { font-size: 1.2em; }
+.isloggedout { min-height: 455px; padding: 0 12px 0 7px; }
+.promo { padding-right: 0; }
+
+/* =========================
+   LOGIN TWO-COLUMN
+   ========================= */
+#login .column-first { width: 379px; float: left; display: inline; margin: 0 14px 0 0; }
+#login .column-third { width: 569px; float: left; display: inline; }
+
+/* =========================
+   GREEN LOGIN BOX
+   ========================= */
+.green-box { width: 379px; margin: 0 0 20px 0; border: 1px solid #949494; border-radius: 5px; }
+
+.green-box-header { height: 40px; overflow: hidden; }
+.login-left { width: 9px; float: left; display: inline; height: 34px; background-color: #ECF4DC; border-top-left-radius: 5px; }
+.login-repeat { width: 347px; float: left; display: inline; height: 34px; line-height: 34px; padding: 0 7px; background-color: #ECF4DC; }
+.login-right { width: 9px; float: left; display: inline; height: 34px; background-color: #ECF4DC; border-top-right-radius: 5px; }
+
+.login-repeat label { float: left; display: inline; width: 300px; height: 34px; line-height: 34px; font-weight: bold; font-size: 1.14em; }
+.login-repeat a { float: right; display: inline; width: 47px; text-align: right; height: 34px; line-height: 34px; text-decoration: underline; font-size: 1.05em; color: #222222; }
+
+.box-content { width: 349px; margin: auto; padding: 10px 10px 6px 10px; }
+.box-content > p { padding: 0 0 14px 0; }
+.box-footer { width: 369px; margin: auto; line-height: 1px; font-size: 1px; height: 4px; }
+
+/* =========================
+   TABS
+   ========================= */
+#login_tabs { overflow: auto; margin-top: 16px; }
+.login_tab { display: block; width: 50%; text-align: center; height: 20px; cursor: pointer; }
+.login_tab_active { border-bottom: 2px solid #177991; font-weight: bold; color: #177991; }
+.login_tab_inactive { border-bottom: 1px solid #222222; font-weight: normal; color: #222222; }
+#login_tab_disposer { float: left; }
+#login_tab_app { float: right; }
+
+/* =========================
+   FORM FIELDS
+   ========================= */
+#tab_disposer_info { height: 30px; }
+
+.data { overflow: hidden; margin-bottom: 0; }
+.data label {
+  float: left; display: inline;
+  width: 125px; height: 26px; line-height: 26px;
+  cursor: pointer; color: #222222;
+  font-size: 1.1em; font-weight: bold;
+  margin-top: 3px;
+}
+
+.data input[type="text"],
+.data input[type="password"] {
+  float: right; display: inline;
+  width: 206px; height: 20px; line-height: 20px;
+  vertical-align: middle;
+  padding: 4px 2px 2px 6px;
+  white-space: nowrap;
+  border-radius: 5px; border: 1px solid #949494;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em; color: #222222;
+}
+.data input:focus { outline-color: #03a1d2; }
+
+.data .info { float: right; display: inline; width: 217px; height: 22px; margin: 0 0 1px 0; line-height: 22px; color: #222222; font-size: 0.85em; }
+
+.pin-wrap { position: relative; float: right; display: inline; width: 206px; }
+.pin-wrap input { width: 100% !important; float: none !important; }
+
+.eye-toggle {
+  height: 24px; width: 24px;
+  background-color: transparent; border: none;
+  display: inline-block; position: absolute;
+  right: 4px; bottom: 26px;
+  cursor: pointer; font-size: 12px; color: #949494;
+}
+
+#tab_app_info { display: block; padding: 16px 8px 16px 0; font-size: 0.8em; }
+
+/* =========================
+   BUTTON
+   ========================= */
+.dynamic-btn { margin: 0; }
+.dynamic-btn .content { padding: 0; width: auto; margin: 0; background: none; text-align: center; min-width: 50px; }
+.dynamic-btn .content a {
+  white-space: nowrap; border: 0; cursor: pointer;
+  color: #FFFFFF; font-size: 1.05em; font-weight: bold;
+  text-decoration: none !important;
+  background-color: #177991;
+  height: 21px !important; line-height: 15px;
+  padding: 6px 10px 0 10px;
+  display: block; border-radius: 6px;
+  min-width: 30px; text-align: center;
+}
+.dynamic-btn .content a:hover { background-color: #105566; color: #FFFFFF; }
+
+/* =========================
+   LOGIN-BOX-LINK
+   ========================= */
+.login-box-link { list-style: none; margin-top: 10px; }
+.login-box-link li { line-height: 15px; }
+.login-box-link li a {
+  font-size: 1em; color: #222222; text-decoration: none;
+  padding: 11px 0 8px 16px; display: block;
+  line-height: 15px; min-height: 15px; overflow: hidden;
+}
+.login-box-link li a:hover { font-weight: bold; }
+
+/* =========================
+   INFO BOXES (right column)
+   ========================= */
+.info-box {
+  width: 175px; float: left; display: inline;
+  margin: 0 19px 0 0;
+  border-radius: 4px; border: 1px solid #d9d9d9;
+}
+.info-box.last { margin: 0; }
+
+.login-info-top { width: 175px; line-height: 1px; font-size: 1px; height: 4px; }
+.login-info-repeat-x { width: 173px; padding: 5px 0 0 0; min-height: 163px; background-color: #fff; }
+.login-info-bottom { width: 175px; line-height: 1px; font-size: 1px; height: 4px; margin: auto; }
+
+.info-box h3 { font-size: 1.38em; line-height: 1.1em; margin: 0 0 0.44em 0; color: #177991; padding: 0 0 0 10px; width: 130px; }
+
+.stripline { border-top: 1px solid #f6f6f6; width: 154px; height: 1px; line-height: 1px; font-size: 1px; margin: auto; }
+
+/* Notifications in first box */
+.notifications { width: 154px; margin: auto; }
+.notification-text { margin: 10px auto 0; width: 154px; padding: 0 10px; color: #222222; font-size: 0.9em; line-height: 1.3; }
+
+.info-box ul { width: 173px; padding: 0; margin: 0; }
+.info-box li { min-height: 30px; line-height: 15px; border-top: 1px solid #f6f6f6; width: 173px; }
+.info-box li a {
+  font-size: 1em; color: #222222; text-decoration: none;
+  padding: 8px 0 8px 26px; display: block;
+  line-height: 15px; min-height: 15px; width: 147px; overflow: hidden;
+}
+.info-box li a:hover { background-color: #f6f6f6; font-weight: bold; }
+
+/* =========================
+   PROMO
+   ========================= */
+.promo-area { width: 394px; margin: 20px 0 0 0; clear: both; }
+.promo-area img { display: block; }
+
+/* =========================
+   FOOTER (font-size 1.2em = 12.96px)
+   ========================= */
+#footer { font-size: 1.2em; margin: 0; height: 38px; border-top: 1px solid #d9d9d9; }
+.footer-navigation { width: 964px; height: 38px; }
+.footer-navigation .footer-first { width: 205px; margin: 0; float: left; display: inline-block; height: 38px; }
+.footer-navigation .footer-second { float: left; display: inline; width: 590px; height: 38px; }
+.footer-navigation .footer-second ul { list-style: none; margin: 0; padding: 0; }
+.footer-navigation .footer-second li { display: inline; float: left; height: 38px; line-height: 38px; color: #222222; text-align: center; }
+.footer-navigation .footer-second li a { color: #222222; cursor: pointer; text-decoration: none; }
+.footer-navigation .footer-second li a:hover { font-weight: bold; }
+.footer-navigation .footer-second li.last-footer { background: none; margin: 0; padding: 0; }
+
+#spacer-footer { height: 35px; }
+
+/* =========================
+   CLEARFIX
+   ========================= */
+.clearfix::after { content: ""; display: table; clear: both; }
+.c, .clear { clear: both; line-height: 0; font-size: 0; height: 1px; margin: 0 0 -1px 0; width: 0; overflow: hidden; display: block; }

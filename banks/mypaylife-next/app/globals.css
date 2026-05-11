@@ -1,0 +1,447 @@
+/* Reset & Base */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #ffffff;
+}
+
+a { color: #131e7e; text-decoration: none; }
+a:hover { color: #0f165a; text-decoration: underline; }
+
+/* =========================
+   LAYOUT
+   ========================= */
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#authenticationContainer {
+  width: 100%;
+}
+
+.auth-row {
+  display: flex;
+  min-height: calc(100vh - 50px);
+}
+
+#login-content {
+  width: 326px;
+  padding: 0 10px;
+  margin-left: 217px;
+  flex-shrink: 0;
+}
+
+#loginContainer {
+  width: 274px;
+}
+
+#authenticationSection .container-fluid {
+  padding: 0;
+}
+
+.full-size-image {
+  flex: 1;
+  position: relative;
+}
+
+.full-size-image::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/mypaylife/background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  min-height: calc(100vh - 50px);
+}
+
+/* =========================
+   HEADER / LOGO
+   ========================= */
+#headerContainer {
+  padding-top: 10px;
+  margin-bottom: 20px;
+}
+
+.logo-desktop {
+  height: 50px;
+  width: auto;
+}
+
+/* =========================
+   FORM
+   ========================= */
+h1.form-signin-heading {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0 0 10px;
+  line-height: 22px;
+}
+
+.form-signin-label {
+  font-weight: 700;
+  margin-bottom: 5px;
+  font-size: 14px;
+  visibility: hidden;
+  display: block;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.input-group {
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 40px;
+  padding: 5px 8px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 30px;
+  color: #555555;
+  background-color: #ffffff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  appearance: none;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control.round-input-edges {
+  border-radius: 6px 0 0 6px;
+}
+
+.form-control:focus {
+  color: #555555;
+  background-color: #ffffff;
+  border-color: #86b7fe;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.form-control::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 40px;
+  color: #b3b3b3;
+  text-align: center;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  border-radius: 0 6px 6px 0;
+  border-left: none;
+  height: 40px;
+  cursor: pointer;
+}
+
+.clear-text,
+.input-group-text[style*="display: none"] {
+  display: none !important;
+}
+
+/* =========================
+   FORGOT LINKS
+   ========================= */
+#customerNumberForgotten,
+#passwordForgotten {
+  margin: 10px 0;
+}
+
+#customerNumberForgotten a,
+#passwordForgotten a {
+  color: #131e7e;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+#customerNumberForgotten a:hover,
+#passwordForgotten a:hover {
+  color: #0f165a;
+  text-decoration: underline;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+.button-container {
+  margin-top: 14px;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  font-size: 14px;
+  height: 34px;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+}
+
+.btn-primary {
+  background-color: #a5b8d0;
+  color: #000066;
+  border-color: #a5b8d0;
+  font-weight: 700;
+  padding: 2px 10px;
+  width: 100%;
+}
+
+.btn-primary:hover {
+  background-color: #edf1f6;
+  border-color: #000066;
+  color: #000066;
+}
+
+.btn-default {
+  background-color: #ffffff;
+  color: #131e7e;
+  border: 1px solid #000066;
+  font-weight: 600;
+  padding: 0 10px;
+  display: block;
+  line-height: 34px;
+}
+
+.btn-default:hover {
+  background-color: #f0f0f5;
+  color: #0f165a;
+}
+
+/* =========================
+   REGISTER BLOCK
+   ========================= */
+#registerContainer {
+  margin: 60px 2px;
+  padding: 15px;
+  width: 274px;
+}
+
+.register-heading {
+  font-size: 13px;
+}
+
+.register-box-content {
+  font-size: 13px;
+  color: #212529;
+}
+
+.register-box-content p {
+  margin: 0 0 0;
+  line-height: 1.5;
+}
+
+.register-box-content a {
+  color: #131e7e;
+  font-weight: 600;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+#footerContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #f3f3f8;
+  border: none;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 50px;
+  height: 50px;
+  padding: 0 15px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.footer-content a {
+  color: #000066;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: underline;
+  margin-right: 20px;
+}
+
+.footer-content a:hover {
+  color: #0f165a;
+}
+
+.footer-logo {
+  height: 17px;
+  width: auto;
+}
+
+/* =========================
+   HELPERS
+   ========================= */
+.clearfix::after {
+  display: block;
+  clear: both;
+  content: "";
+}
+
+.float-start { float: left; }
+
+.margin-t-10 { margin-top: 10px; }
+.margin-r-10 { margin-right: 10px; }
+.margin-b-5 { margin-bottom: 5px; }
+
+/* =========================
+   RESPONSIVE — TABLET
+   ========================= */
+@media (max-width: 960px) {
+  .auth-row {
+    flex-direction: column;
+  }
+
+  #login-content {
+    width: 100%;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+  }
+
+  #loginContainer {
+    width: 100%;
+  }
+
+  #registerContainer {
+    width: 100%;
+    margin: 30px 0;
+  }
+
+  .full-size-image {
+    display: none;
+  }
+
+  #footerContainer {
+    position: relative;
+  }
+
+  .page-container {
+    min-height: auto;
+  }
+}
+
+/* =========================
+   RESPONSIVE — MOBILE
+   ========================= */
+@media (max-width: 600px) {
+  .auth-row {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  #login-content {
+    width: 100%;
+    margin-left: 0;
+    padding: 0 16px;
+  }
+
+  #loginContainer {
+    width: 100%;
+  }
+
+  #headerContainer {
+    text-align: center;
+    padding-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .logo-desktop {
+    height: 40px;
+  }
+
+  h1.form-signin-heading {
+    font-size: 18px;
+  }
+
+  .form-control {
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .btn {
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .btn-primary {
+    padding: 8px 10px;
+  }
+
+  .btn-default {
+    line-height: 42px;
+  }
+
+  #registerContainer {
+    width: 100%;
+    margin: 20px 0;
+    padding: 15px 0;
+  }
+
+  .full-size-image {
+    display: none;
+  }
+
+  #footerContainer {
+    position: relative;
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .footer-content {
+    flex-wrap: wrap;
+    height: auto;
+    line-height: normal;
+    padding: 8px 15px;
+    gap: 8px;
+  }
+
+  .footer-content a {
+    font-size: 13px;
+    margin-right: 12px;
+  }
+
+  .page-container {
+    min-height: auto;
+    padding-bottom: 0;
+  }
+}

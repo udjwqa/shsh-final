@@ -1,0 +1,530 @@
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-roboto), Roboto, Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  color: #4a4a4a;
+  background-color: #fff;
+  line-height: 1.15;
+}
+
+a { color: #990000; text-decoration: none; }
+a:hover { color: #990000; }
+
+/* =========================
+   CONTAINER
+   ========================= */
+.container {
+  width: 970px;
+  margin: 0 auto;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.date {
+  font-size: 0.80em;
+  color: #4a4a4a;
+}
+
+.header {
+  border-bottom: 1px solid #bbb;
+  padding-bottom: 5px;
+}
+
+.header-left {
+  display: inline-block;
+}
+
+.header-left img {
+  vertical-align: top;
+}
+
+.languages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.languages li {
+  display: inline-block;
+}
+
+.languages li.active {
+  background-color: #dcdcdc;
+  border-radius: 4px;
+}
+
+.languages li:hover {
+  background-color: #dcdcdc;
+  border-radius: 4px;
+}
+
+.languages li a {
+  display: block;
+  padding: 11px 6px;
+  text-decoration: none;
+  color: #4a4a4a;
+  font-weight: 600;
+  font-size: 0.90em;
+}
+
+.languages li.active a {
+  color: #000;
+}
+
+.languages li:hover a {
+  color: #fff;
+}
+
+.languages li.active:hover a {
+  color: #000;
+}
+
+/* =========================
+   MAIN CONTENT
+   ========================= */
+.main-content {
+  border-top: 3px solid #990000;
+  padding: 15px;
+  overflow: hidden;
+  background: url('/bawag/BAWAG26122.jpg') no-repeat top right;
+  background-size: 972px 490px;
+  min-height: 490px;
+}
+
+.column-left {
+  width: 322px;
+  float: left;
+  min-height: 460px;
+}
+
+.column-right {
+  width: 607px;
+  float: right;
+}
+
+/* =========================
+   LOGIN CARD
+   ========================= */
+.login-top {
+  min-height: 370px;
+  padding: 22px 20px 10px 20px;
+  background-color: #fff;
+  margin-bottom: 13px;
+  box-shadow: 0 10px 10px -3px rgb(105 61 61 / 30%), 0 4px 6px -4px rgb(190 165 165 / 50%);
+  border: 1px solid #e9e9e9;
+  border-radius: 8px;
+}
+
+.login-top-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.login-top h3 {
+  font-size: 1.20em;
+  margin-top: 0;
+  margin-bottom: 24px;
+  max-width: 250px;
+  display: inline-block;
+}
+
+.question-mark {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  font-size: 11px;
+  color: #999;
+  cursor: pointer;
+}
+
+.login-top p {
+  margin-top: 0;
+  font-size: 0.78em;
+}
+
+.login-top p strong {
+  font-weight: 700;
+}
+
+/* =========================
+   TABS
+   ========================= */
+#login_tabs {
+  overflow: auto;
+  margin-top: 16px;
+}
+
+.login_tab {
+  display: block;
+  width: 50%;
+  text-align: center;
+  font-size: 0.8em;
+  height: 20px;
+  cursor: pointer;
+}
+
+.login_tab_active {
+  border-bottom: 2px solid #990000;
+  font-weight: bold;
+  color: #990000;
+}
+
+.login_tab_inactive {
+  border-bottom: 1px solid #888;
+  font-weight: normal;
+  color: #4a4a4a;
+}
+
+#login_tab_disposer { float: left; }
+#login_tab_app { float: right; }
+
+.login_tab a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================
+   FORM
+   ========================= */
+.form-wrap {
+  padding-top: 30px;
+}
+
+.form-wrap input[type="text"],
+.form-wrap input[type="password"] {
+  width: 272px;
+  height: 42px;
+  line-height: 42px;
+  border-radius: 7px;
+  border: 1px solid #949494;
+  margin-bottom: 11px;
+  padding: 0 15px;
+  background-color: #fff;
+  color: #4a4a4a;
+  font-size: 0.93em;
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  display: block;
+}
+
+.form-wrap input[type="text"]:last-of-type {
+  margin-bottom: 16px;
+}
+
+.form-wrap input::placeholder {
+  color: #999;
+  opacity: 1;
+  font-size: 0.85em;
+}
+
+.form-wrap input:focus {
+  outline-color: #03a1d2;
+}
+
+.pin-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.eye-toggle {
+  height: 25px;
+  width: 25px;
+  background-color: transparent;
+  border: none;
+  display: inline-block;
+  position: absolute;
+  top: 9px;
+  right: 16px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #949494;
+}
+
+.submit-button {
+  text-align: right;
+  margin-bottom: 40px;
+  padding-right: 10px;
+}
+
+.submit-button button {
+  cursor: pointer;
+  width: 176px;
+  border: none;
+  background-color: #990000;
+  border-radius: 6px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  color: #ffffff;
+  font-family: var(--font-roboto), Roboto, Arial, sans-serif;
+  font-size: 1em;
+}
+
+.submit-button button:hover {
+  background-color: #670000;
+}
+
+/* =========================
+   OPT LINKS
+   ========================= */
+.opt-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.opt-links li {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.opt-links a {
+  font-size: 0.80em;
+  text-decoration: none;
+  color: #990000;
+  display: inline-block;
+  padding-left: 12px;
+  background: url('/bawag/chevron_icon.png') no-repeat 0 1px;
+}
+
+.opt-links a:hover {
+  color: #990000;
+}
+
+/* =========================
+   RIGHT COLUMN — INFO
+   ========================= */
+.info-wrapper {
+  background-color: #fff;
+  margin-bottom: 5px;
+  border-radius: 8px;
+  box-shadow: 0 10px 10px -3px rgb(105 61 61 / 30%), 0 4px 6px -4px rgb(190 165 165 / 50%);
+  border: 1px solid #e9e9e9;
+}
+
+.info {
+  padding: 24px;
+  overflow: hidden;
+}
+
+.column-3-grid {
+  width: 172px;
+  float: left;
+  margin-right: 20px;
+}
+
+.column-3-grid:nth-of-type(3n) {
+  margin-right: 0;
+}
+
+.column-3-grid h3 {
+  font-size: 0.96em;
+  margin-top: 0;
+  margin-bottom: 11px;
+  color: #990000;
+  font-weight: 900;
+}
+
+.column-3-grid ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.column-3-grid ul li {
+  margin-bottom: 12px;
+  font-size: 0.8em;
+  line-height: 1.3;
+}
+
+.column-3-grid ul li a {
+  text-decoration: none;
+  color: #990000;
+  display: inline-block;
+  padding-left: 12px;
+  background: url('/bawag/chevron_icon.png') no-repeat 0 2px;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+.footer {
+  padding-top: 15px;
+  position: relative;
+}
+
+.footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+
+.footer ul li {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.footer ul li a {
+  color: #676767;
+  font-size: 0.75em;
+  text-decoration: underline;
+}
+
+.footer ul li a:hover {
+  color: #990000;
+}
+
+.footer p {
+  text-align: center;
+  color: #676767;
+  font-size: 0.7em;
+}
+
+/* =========================
+   HELPERS
+   ========================= */
+.clearfix::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* =========================
+   RESPONSIVE — TABLET
+   ========================= */
+@media (max-width: 960px) {
+  .main-content {
+    background-size: cover;
+    min-height: auto;
+  }
+
+  .column-left {
+    width: 100%;
+    max-width: 400px;
+    float: none;
+    margin: 0 auto;
+    min-height: auto;
+  }
+
+  .column-right {
+    display: none;
+  }
+
+  .container {
+    width: 100%;
+  }
+}
+
+/* =========================
+   RESPONSIVE — MOBILE
+   ========================= */
+@media (max-width: 600px) {
+  .header .header-top {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+
+  .header .header-top .date {
+    font-size: 11px;
+  }
+
+  .header .languages {
+    font-size: 11px;
+  }
+
+  .header-left {
+    text-align: center;
+  }
+
+  .header-left img {
+    width: 140px;
+    height: auto;
+  }
+
+  .main-content {
+    padding: 10px;
+    background-image: none;
+    background-color: #f0f0f0;
+    min-height: auto;
+  }
+
+  .column-left {
+    width: 100%;
+    float: none;
+    min-height: auto;
+  }
+
+  .column-right {
+    display: none;
+  }
+
+  .login-top {
+    min-height: auto;
+    padding: 16px;
+  }
+
+  .login-top h3 {
+    font-size: 18px;
+  }
+
+  #login_tabs {
+    margin-bottom: 10px;
+  }
+
+  .login_tab {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .form-wrap input[type="text"],
+  .form-wrap input[type="password"] {
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .submit-button button {
+    width: 100%;
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .footer ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .footer ul li {
+    font-size: 12px;
+  }
+
+  .footer p {
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .container {
+    width: 100%;
+    padding: 0;
+  }
+}

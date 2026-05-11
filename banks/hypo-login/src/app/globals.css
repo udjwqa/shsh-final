@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --hyp-primary: #0468b3;
+  --hyp-primary-dark: #035a9a;
+  --hyp-danger: #ca261a;
+  --hyp-body-bg: #f4f4f4;
+  --hyp-white: #ffffff;
+  --hyp-black: #000000;
+  --hyp-gray-100: #f5f5f5;
+  --hyp-gray-300: #e0e0e0;
+  --hyp-gray-500: #9e9e9e;
+  --hyp-gray-600: #757575;
+  --hyp-gray-700: #616161;
+  --hyp-text-primary: rgba(0, 0, 0, 0.87);
+  --hyp-text-secondary: rgba(0, 0, 0, 0.54);
+}
+
+@theme inline {
+  --color-hyp-primary: var(--hyp-primary);
+  --color-hyp-primary-dark: var(--hyp-primary-dark);
+  --color-hyp-danger: var(--hyp-danger);
+  --color-hyp-gray-100: var(--hyp-gray-100);
+  --color-hyp-gray-300: var(--hyp-gray-300);
+  --color-hyp-gray-500: var(--hyp-gray-500);
+  --color-hyp-gray-600: var(--hyp-gray-600);
+  --color-hyp-gray-700: var(--hyp-gray-700);
+  --color-hyp-black: var(--hyp-black);
+  --color-hyp-white: var(--hyp-white);
+  --font-sans: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: var(--hyp-body-bg);
+  color: var(--hyp-text-primary);
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.form-field-underline {
+  position: relative;
+  height: 1px;
+  background-color: var(--hyp-gray-500);
+}
+.form-field-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background-color: var(--hyp-primary);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.form-field:focus-within .form-field-underline::after {
+  transform: scaleX(1);
+}
+
+.form-field-underline-error {
+  position: relative;
+  height: 2px;
+  background-color: var(--hyp-danger);
+}
+
+.hyp-checkbox {
+  appearance: none;
+  width: 18px; height: 18px;
+  border: 2px solid var(--hyp-text-secondary);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+.hyp-checkbox:checked {
+  background-color: var(--hyp-primary);
+  border-color: var(--hyp-primary);
+}
+.hyp-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 0px;
+  width: 6px; height: 11px;
+  border: solid var(--hyp-white);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.hyp-btn-primary {
+  background-color: var(--hyp-primary);
+  color: var(--hyp-white);
+  border: 2px solid var(--hyp-primary);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 7px 16px;
+  min-width: 172px;
+  cursor: pointer;
+  line-height: 1.5;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.hyp-btn-primary:hover:not(:disabled) {
+  background-color: var(--hyp-primary-dark);
+  border-color: var(--hyp-primary-dark);
+}
+.hyp-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hyp-help-btn {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background-color: var(--hyp-primary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--hyp-white);
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  transition: box-shadow 0.2s ease;
+}
+.hyp-help-btn:hover {
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+}
+
+.login-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

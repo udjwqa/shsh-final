@@ -1,0 +1,267 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+@import "tailwindcss";
+
+:root {
+  --raf-primary: #fbf315;
+  --raf-primary-dark: #d9d204;
+  --raf-danger: #ca261a;
+  --raf-success: #057a2f;
+  --raf-info: #0e66b0;
+  --raf-warning: #a85b1e;
+  --raf-accent: #616161;
+  --raf-body-bg: #f4f4f4;
+  --raf-white: #ffffff;
+  --raf-black: #000000;
+  --raf-gray-100: #f5f5f5;
+  --raf-gray-300: #e0e0e0;
+  --raf-gray-500: #9e9e9e;
+  --raf-gray-600: #757575;
+  --raf-gray-700: #616161;
+  --raf-gray-900: #212121;
+  --raf-text-primary: rgba(0, 0, 0, 0.87);
+  --raf-text-secondary: rgba(0, 0, 0, 0.54);
+}
+
+@theme inline {
+  --color-raf-primary: var(--raf-primary);
+  --color-raf-primary-dark: var(--raf-primary-dark);
+  --color-raf-danger: var(--raf-danger);
+  --color-raf-success: var(--raf-success);
+  --color-raf-info: var(--raf-info);
+  --color-raf-warning: var(--raf-warning);
+  --color-raf-accent: var(--raf-accent);
+  --color-raf-body-bg: var(--raf-body-bg);
+  --color-raf-white: var(--raf-white);
+  --color-raf-black: var(--raf-black);
+  --color-raf-gray-100: var(--raf-gray-100);
+  --color-raf-gray-300: var(--raf-gray-300);
+  --color-raf-gray-500: var(--raf-gray-500);
+  --color-raf-gray-600: var(--raf-gray-600);
+  --color-raf-gray-700: var(--raf-gray-700);
+  --color-raf-gray-900: var(--raf-gray-900);
+  --font-sans: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+body {
+  background: var(--raf-body-bg);
+  color: var(--raf-text-primary);
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Form field underline animation */
+.form-field-underline {
+  position: relative;
+  height: 1px;
+  background-color: var(--raf-gray-500);
+}
+
+.form-field-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--raf-primary);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.form-field:focus-within .form-field-underline::after {
+  transform: scaleX(1);
+}
+
+/* Floating label animation */
+.floating-label {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--raf-text-secondary);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  transform-origin: left top;
+}
+
+.floating-input:focus ~ .floating-label,
+.floating-input:not(:placeholder-shown) ~ .floating-label {
+  top: 0;
+  transform: translateY(-100%) scale(0.75);
+  color: var(--raf-text-secondary);
+}
+
+/* Custom select styling */
+.raf-select {
+  appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+  color: var(--raf-text-primary);
+  padding: 0;
+}
+
+/* Checkbox custom styling */
+.raf-checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--raf-text-secondary);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.raf-checkbox:checked {
+  background-color: var(--raf-primary);
+  border-color: var(--raf-primary);
+}
+
+.raf-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 11px;
+  border: solid var(--raf-black);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Button primary */
+.raf-btn-primary {
+  background-color: var(--raf-primary);
+  color: var(--raf-black);
+  border: 2px solid var(--raf-primary);
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 7px 16px;
+  min-width: 172px;
+  cursor: pointer;
+  text-transform: none;
+  letter-spacing: normal;
+  line-height: 1.5;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.raf-btn-primary:hover:not(:disabled) {
+  background-color: var(--raf-primary-dark);
+  border-color: var(--raf-primary-dark);
+}
+
+.raf-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Help floating button */
+.raf-help-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--raf-primary);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  transition: box-shadow 0.2s ease;
+}
+
+.raf-help-btn:hover {
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+}
+
+/* Background image effect */
+.login-bg {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* pushTAN countdown ring */
+.raf-countdown-ring {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid var(--raf-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--raf-text-primary);
+  flex-shrink: 0;
+}
+
+/* Back arrow button on pushTAN header */
+.raf-back-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--raf-text-primary);
+  border-radius: 50%;
+  transition: background-color 0.15s ease;
+}
+
+.raf-back-btn:hover {
+  background-color: var(--raf-gray-100);
+}
+
+/* Avatar circle on pushTAN header */
+.raf-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--raf-gray-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--raf-gray-700);
+  flex-shrink: 0;
+}
+
+/* Resend button (replaces ring at 0:00) */
+.raf-resend-btn {
+  background-color: var(--raf-primary);
+  color: var(--raf-black);
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.raf-resend-btn:hover {
+  background-color: var(--raf-primary-dark);
+}
+
+/* Success checkmark */
+.raf-success-check {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: var(--raf-success);
+  color: var(--raf-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}

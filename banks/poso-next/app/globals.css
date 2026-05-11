@@ -1,0 +1,312 @@
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; height: 100%; }
+
+body {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.78);
+  background-color: #f4f4f4;
+}
+
+/* =========================
+   BACKGROUND
+   ========================= */
+.bg-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/poso/poso_2026.jpg');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: 0;
+}
+
+.gradient-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 100px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* =========================
+   PAGE LAYOUT
+   ========================= */
+.page-layout {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  padding-top: 158px;
+}
+
+/* =========================
+   LOGIN CARD
+   ========================= */
+.login-card {
+  background-color: #ffffff;
+  border-radius: 4px;
+  width: 640px;
+  max-width: 100%;
+  padding: 34px 0 16px;
+  margin-top: 34px;
+  position: relative;
+}
+
+.card-inner {
+  padding: 0 30px;
+}
+
+/* =========================
+   LOGO
+   ========================= */
+.card-logo {
+  position: absolute;
+  top: -34px;
+  left: 0;
+  width: 100%;
+  height: 68px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-logo img {
+  height: 68px;
+  width: 68px;
+}
+
+/* =========================
+   LANGUAGE SWITCH
+   ========================= */
+.lang-switch {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: #ffffff;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  min-height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.lang-switch::after {
+  content: "";
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #333;
+}
+
+/* =========================
+   HEADING
+   ========================= */
+h1 {
+  font-size: 32px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.78);
+  margin: 0 0 8px;
+  padding: 0 4px;
+  line-height: 44px;
+}
+
+.description {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.78);
+  margin: 16px 0 12px;
+  line-height: 22px;
+  padding: 0 4px;
+}
+
+/* =========================
+   FORM FIELDS (Material Design style)
+   ========================= */
+.form-field {
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.form-field-box {
+  background-color: #f4f4f4;
+  min-height: 48px;
+  padding: 4px 8px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  border-bottom: 2px solid #333;
+}
+
+.form-field-box:focus-within {
+  background-color: #e0e0e0;
+  border-bottom-color: #0c2d69;
+}
+
+.form-field-box .floating-label {
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  font-size: 12px;
+  color: #616161;
+  line-height: 16px;
+  pointer-events: none;
+  transition: all 0.15s;
+}
+
+.form-field-box:focus-within .floating-label {
+  color: #424242;
+}
+
+.form-field-box input,
+.form-field-box select {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  color: rgb(0, 0, 0);
+  line-height: 22px;
+  padding: 14px 0 2px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-field-box select {
+  cursor: pointer;
+  padding-right: 24px;
+}
+
+/* Select arrow */
+.select-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #333;
+  pointer-events: none;
+}
+
+/* Required asterisk */
+.required::after {
+  content: " *";
+  color: #616161;
+}
+
+/* =========================
+   CHECKBOX
+   ========================= */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  padding: 8px 4px;
+  margin: 8px 0;
+}
+
+.checkbox-input {
+  width: 14px;
+  height: 14px;
+  margin-right: 12px;
+  accent-color: #0c2d69;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* =========================
+   BUTTON
+   ========================= */
+.btn-row {
+  display: flex;
+  justify-content: center;
+  padding: 8px 4px 16px;
+}
+
+.btn-primary {
+  background-color: #6d81a5;
+  color: #ffffff;
+  border: 2px solid #6d81a5;
+  border-radius: 0px;
+  height: 40px;
+  min-width: 172px;
+  width: 312px;
+  padding: 7px 16px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btn-primary:hover {
+  background-color: #0c2d69;
+  border-color: #0c2d69;
+}
+
+.btn-primary:active {
+  background-color: #0b295f;
+  border-color: #0b295f;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+.login-footer {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 44px;
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+}
+
+.login-footer a,
+.login-footer .copyright {
+  color: rgb(51, 51, 51);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
