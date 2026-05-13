@@ -34,5 +34,8 @@ export async function GET(_req: NextRequest, { params }: { params: Promise<{ slu
     redirectAuto: listing.redirectAuto,
     redirectJobs: listing.redirectJobs,
     redirectPostListing: listing.redirectPostListing,
+    buyerName: listing.buyerName,
+    buyerAddress: listing.buyerAddress,
+    buyerOrderNumber: listing.buyerOrderNumber,
   });
 }

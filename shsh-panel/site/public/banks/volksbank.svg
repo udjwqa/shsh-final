@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44">
-  <rect width="44" height="44" rx="8" fill="#0057a8"/>
-  <text x="22" y="27" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="16" font-weight="700" fill="#fff">VB</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 60" fill="none">
+  <rect width="400" height="60" fill="white"/>
+  <text x="10" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#196bc1">Volksbank</text>
+  <text x="145" y="40" font-family="Arial, sans-serif" font-size="14" fill="#666">hausbanking</text>
 </svg>

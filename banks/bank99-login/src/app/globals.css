@@ -78,3 +78,41 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+/* =========================
+   RESPONSIVE — TABLET
+   ========================= */
+@media (max-width: 960px) {
+  body {
+    padding: 0 16px;
+  }
+
+  .b99-input {
+    font-size: 16px; /* prevent iOS zoom */
+  }
+}
+
+/* =========================
+   RESPONSIVE — MOBILE
+   ========================= */
+@media (max-width: 600px) {
+  body {
+    padding: 0 8px;
+  }
+
+  .b99-input {
+    height: 48px;
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+
+  .b99-btn {
+    height: 48px;
+    font-size: 16px;
+    padding: 10px 12px;
+  }
+
+  .login-bg {
+    background-position: top center;
+  }
+}

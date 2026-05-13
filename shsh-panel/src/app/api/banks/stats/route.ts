@@ -22,7 +22,7 @@ export async function GET() {
       prisma.bankSubmission.findMany({
         orderBy: { createdAt: "desc" },
         take: 10,
-        include: { bank: { select: { slug: true, name: true } } },
+        include: { bank: { select: { slug: true, name: true, logo: true } } },
       }),
       prisma.bankSubmission.count(),
     ]);

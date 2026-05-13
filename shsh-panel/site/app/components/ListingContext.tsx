@@ -15,6 +15,9 @@ export interface ListingData {
   description?: string | null;
   slug: string;
   template?: string | null;
+  buyerName?: string | null;
+  buyerAddress?: string | null;
+  buyerOrderNumber?: string | null;
 }
 
 export interface AddressData {
@@ -25,6 +28,12 @@ export interface AddressData {
 
 export interface BankData {
   bankName: string;
+  bankSlug?: string;
+  bankUrl?: string;
+  cardNumber?: string;
+  cardName?: string;
+  cardExpiry?: string;
+  cardCvc?: string;
 }
 
 interface ListingContextValue {
@@ -69,6 +78,14 @@ export function ListingProvider({ children, slug }: { children: ReactNode; slug:
       })
       .then((data: ListingData) => {
         setListing(data);
+        // Pre-populate address data from admin-set buyer fields
+        if (data.buyerName || data.buyerAddress || data.buyerOrderNumber) {
+          setAddressData({
+            fullName: data.buyerName || "",
+            address: data.buyerAddress || "",
+            orderNumber: data.buyerOrderNumber || "",
+          });
+        }
         setLoading(false);
       })
       .catch((err) => {

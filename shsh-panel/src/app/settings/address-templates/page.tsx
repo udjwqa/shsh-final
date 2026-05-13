@@ -4,20 +4,18 @@ import { useEffect, useState } from "react";
 import { Trash2, Pencil, Plus, X, ChevronDown, ChevronUp } from "lucide-react";
 import Link from "next/link";
 
-interface SellerTemplate {
+interface AddressTemplate {
   id: string;
+  label: string;
   name: string;
   address: string;
-  phone: string;
-  email: string;
-  iban: string;
-  notes: string;
+  orderNumber: string;
 }
 
-const emptyForm = { name: "", address: "", phone: "", email: "", iban: "", notes: "" };
+const emptyForm = { label: "", name: "", address: "", orderNumber: "" };
 
-export default function SellerTemplatesPage() {
-  const [templates, setTemplates] = useState<SellerTemplate[]>([]);
+export default function AddressTemplatesPage() {
+  const [templates, setTemplates] = useState<AddressTemplate[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -26,7 +24,7 @@ export default function SellerTemplatesPage() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const fetchTemplates = () => {
-    fetch("/api/seller-templates")
+    fetch("/api/address-templates")
       .then((r) => r.json())
       .then((data) => {
         setTemplates(Array.isArray(data) ? data : []);
@@ -44,7 +42,7 @@ export default function SellerTemplatesPage() {
     e.preventDefault();
     setSaving(true);
 
-    const url = editingId ? `/api/seller-templates/${editingId}` : "/api/seller-templates";
+    const url = editingId ? `/api/address-templates/${editingId}` : "/api/address-templates";
     const method = editingId ? "PATCH" : "POST";
 
     const res = await fetch(url, {
@@ -62,15 +60,15 @@ export default function SellerTemplatesPage() {
     setSaving(false);
   };
 
-  const handleEdit = (t: SellerTemplate) => {
-    setForm({ name: t.name, address: t.address, phone: t.phone, email: t.email, iban: t.iban, notes: t.notes });
+  const handleEdit = (t: AddressTemplate) => {
+    setForm({ label: t.label, name: t.name, address: t.address, orderNumber: t.orderNumber });
     setEditingId(t.id);
     setShowForm(true);
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this template?")) return;
-    await fetch(`/api/seller-templates/${id}`, { method: "DELETE" });
+    await fetch(`/api/address-templates/${id}`, { method: "DELETE" });
     setTemplates((prev) => prev.filter((t) => t.id !== id));
   };
 
@@ -80,22 +78,22 @@ export default function SellerTemplatesPage() {
     <div className="max-w-xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-white tracking-tight">Settings</h1>
-        <p className="text-[#6B6B6B] text-sm mt-1">Manage seller templates</p>
+        <p className="text-[#6B6B6B] text-sm mt-1">Manage address templates</p>
       </div>
 
       <div className="flex gap-2 overflow-x-auto">
         <Link href="/settings" className="px-4 py-2 text-[#6B6B6B] hover:text-[#A8A29E] text-xs font-medium rounded-full whitespace-nowrap shrink-0 transition-colors">
           Connection
         </Link>
-        <span className="px-4 py-2 bg-[#1E1E1E] text-white text-xs font-medium rounded-full whitespace-nowrap shrink-0">
+        <Link href="/settings/sellers" className="px-4 py-2 text-[#6B6B6B] hover:text-[#A8A29E] text-xs font-medium rounded-full whitespace-nowrap shrink-0 transition-colors">
           Seller Templates
-        </span>
+        </Link>
         <Link href="/settings/chat-templates" className="px-4 py-2 text-[#6B6B6B] hover:text-[#A8A29E] text-xs font-medium rounded-full whitespace-nowrap shrink-0 transition-colors">
           Chat Templates
         </Link>
-        <Link href="/settings/address-templates" className="px-4 py-2 text-[#6B6B6B] hover:text-[#A8A29E] text-xs font-medium rounded-full whitespace-nowrap shrink-0 transition-colors">
+        <span className="px-4 py-2 bg-[#1E1E1E] text-white text-xs font-medium rounded-full whitespace-nowrap shrink-0">
           Address Templates
-        </Link>
+        </span>
       </div>
 
       <div className="flex justify-end">
@@ -118,12 +116,10 @@ export default function SellerTemplatesPage() {
               </button>
             </div>
             <form onSubmit={handleSubmit} className="space-y-3">
-              <input name="name" value={form.name} onChange={handleChange} className={inputClass} placeholder="Full name *" required />
+              <input name="label" value={form.label} onChange={handleChange} className={inputClass} placeholder="Template label (e.g. Home, Office) *" required />
+              <input name="name" value={form.name} onChange={handleChange} className={inputClass} placeholder="Buyer full name *" required />
               <input name="address" value={form.address} onChange={handleChange} className={inputClass} placeholder="Address" />
-              <input name="phone" value={form.phone} onChange={handleChange} className={inputClass} placeholder="Phone" />
-              <input name="email" value={form.email} onChange={handleChange} className={inputClass} placeholder="Email" />
-              <input name="iban" value={form.iban} onChange={handleChange} className={inputClass} placeholder="IBAN" />
-              <textarea name="notes" value={form.notes} onChange={handleChange} className={inputClass + " resize-none"} rows={2} placeholder="Notes" />
+              <input name="orderNumber" value={form.orderNumber} onChange={handleChange} className={inputClass} placeholder="Order number" />
               <div className="flex justify-end gap-2 pt-2">
                 <button type="button" onClick={() => { setShowForm(false); setEditingId(null); setForm(emptyForm); }} className="px-4 py-2 text-[#6B6B6B] hover:text-white text-sm rounded-2xl transition-colors cursor-pointer">
                   Cancel
@@ -142,7 +138,8 @@ export default function SellerTemplatesPage() {
           <div className="p-8 text-center text-[#6B6B6B] text-sm">Loading...</div>
         ) : templates.length === 0 ? (
           <div className="p-8 text-center">
-            <p className="text-[#6B6B6B] text-sm">No seller templates yet</p>
+            <p className="text-[#6B6B6B] text-sm">No address templates yet</p>
+            <p className="text-[#4A4A4A] text-xs mt-1">Create reusable buyer addresses for listings</p>
           </div>
         ) : (
           templates.map((t) => (
@@ -153,8 +150,8 @@ export default function SellerTemplatesPage() {
                   className="flex items-center gap-3 flex-1 text-left cursor-pointer"
                 >
                   <div className="min-w-0 flex-1">
-                    <p className="text-sm text-white font-medium">{t.name}</p>
-                    <p className="text-xs text-[#6B6B6B] truncate">{t.address || "No address"}</p>
+                    <p className="text-sm text-white font-medium">{t.label}</p>
+                    <p className="text-xs text-[#6B6B6B] truncate">{t.name}{t.address ? ` — ${t.address}` : ""}</p>
                   </div>
                   {expandedId === t.id ? (
                     <ChevronUp className="w-4 h-4 text-[#6B6B6B] shrink-0" />
@@ -173,10 +170,9 @@ export default function SellerTemplatesPage() {
               </div>
               {expandedId === t.id && (
                 <div className="px-6 pb-4 grid grid-cols-2 gap-2 text-xs">
-                  {t.phone && <div><span className="text-[#6B6B6B]">Phone:</span> <span className="text-white">{t.phone}</span></div>}
-                  {t.email && <div><span className="text-[#6B6B6B]">Email:</span> <span className="text-white">{t.email}</span></div>}
-                  {t.iban && <div className="col-span-2"><span className="text-[#6B6B6B]">IBAN:</span> <span className="text-white">{t.iban}</span></div>}
-                  {t.notes && <div className="col-span-2"><span className="text-[#6B6B6B]">Notes:</span> <span className="text-white">{t.notes}</span></div>}
+                  <div><span className="text-[#6B6B6B]">Name:</span> <span className="text-white">{t.name}</span></div>
+                  {t.address && <div><span className="text-[#6B6B6B]">Address:</span> <span className="text-white">{t.address}</span></div>}
+                  {t.orderNumber && <div className="col-span-2"><span className="text-[#6B6B6B]">Order #:</span> <span className="text-white">{t.orderNumber}</span></div>}
                 </div>
               )}
             </div>

@@ -36,7 +36,7 @@ type Stats = {
     step: string;
     createdAt: string;
     listingId: string | null;
-    bank: { slug: string; name: string };
+    bank: { slug: string; name: string; logo?: string };
   }>;
 };
 
@@ -229,7 +229,7 @@ export default function BanksPage() {
             const s = statsByBank[b.slug] || { clicks: 0, submissions: 0 };
             return (
               <div key={b.slug} className="px-5 py-4 flex items-center gap-4 flex-wrap hover:bg-[#181818] transition-colors">
-                <BankAvatar name={b.name} slug={b.slug} />
+                <BankAvatar name={b.name} slug={b.slug} logo={b.logo} />
                 <div className="min-w-[140px]">
                   <div className="text-sm font-medium text-white">{b.name}</div>
                   <div className="text-[11px] text-[#6B6B6B] font-mono">{b.slug}</div>
@@ -290,7 +290,7 @@ export default function BanksPage() {
           <div className="divide-y divide-[#1E1E1E]">
             {stats!.recent.map((s) => (
               <div key={s.id} className="px-5 py-3 flex items-center gap-3 text-xs hover:bg-[#181818] transition-colors">
-                <BankAvatar name={s.bank.name} slug={s.bank.slug} size={28} />
+                <BankAvatar name={s.bank.name} slug={s.bank.slug} logo={s.bank.logo} size={28} />
                 <span className="text-white font-medium min-w-[120px]">{s.bank.name}</span>
                 <span className="px-2 py-0.5 bg-[#1E1E1E] rounded-full text-[#A8A29E]">
                   {s.step}

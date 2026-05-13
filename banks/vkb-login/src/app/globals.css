@@ -151,3 +151,54 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+/* =========================
+   RESPONSIVE: Tablet (max-width: 960px)
+   ========================= */
+@media (max-width: 960px) {
+  .vkb-btn-primary {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+/* =========================
+   RESPONSIVE: Mobile (max-width: 600px)
+   ========================= */
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+  }
+
+  .form-field-underline {
+    height: 2px;
+  }
+
+  .vkb-checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .vkb-checkbox:checked::after {
+    left: 5px;
+    top: 1px;
+    width: 7px;
+    height: 12px;
+  }
+
+  .vkb-btn-primary {
+    width: 100%;
+    min-width: unset;
+    padding: 10px 16px;
+    font-size: 1rem;
+  }
+
+  .vkb-help-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .login-bg {
+    background-position: center top;
+  }
+}

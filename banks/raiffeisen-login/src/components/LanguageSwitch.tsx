@@ -14,8 +14,8 @@ export default function LanguageSwitch() {
   const selectedLang = languages.find((l) => l.code === selected);
 
   return (
-    <div className="flex justify-end mr-2">
-      <div className="relative w-3/4 max-w-[180px]">
+    <div className="flex justify-end">
+      <div className="relative w-auto min-w-[100px] max-w-[130px]">
         <label className="sr-only">
           Wählen Sie Ihre bevorzugte Sprache aus
         </label>

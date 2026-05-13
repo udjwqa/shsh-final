@@ -33,7 +33,7 @@ type Submission = {
 type Session = {
   id: string;
   shortCode: string;
-  bank: { slug: string; name: string };
+  bank: { slug: string; name: string; logo?: string };
   listing: { id: string; slug: string; title: string } | null;
   currentStep: string;
   pendingCommand: {
@@ -551,6 +551,7 @@ export default function OperatorPage() {
                     <BankAvatar
                       name={s.bank.name}
                       slug={s.bank.slug}
+                      logo={s.bank.logo}
                       size={30}
                     />
                     <div className="flex-1 min-w-0">
@@ -612,6 +613,7 @@ export default function OperatorPage() {
                 <BankAvatar
                   name={selectedSession.bank.name}
                   slug={selectedSession.bank.slug}
+                  logo={selectedSession.bank.logo}
                   size={36}
                 />
                 <div className="flex-1 min-w-0">

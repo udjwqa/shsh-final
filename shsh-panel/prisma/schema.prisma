@@ -14,10 +14,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  listings        Listing[]
-  settings        Settings?
-  sellerTemplates SellerTemplate[]
-  chatTemplates   ChatTemplate[]
+  listings         Listing[]
+  settings         Settings?
+  sellerTemplates  SellerTemplate[]
+  chatTemplates    ChatTemplate[]
+  addressTemplates AddressTemplate[]
 }
 
 model Listing {
@@ -170,4 +171,17 @@ model Event {
 
   listingId String
   listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model AddressTemplate {
+  id          String   @id @default(cuid())
+  label       String
+  name        String
+  address     String
+  orderNumber String   @default("")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
 }

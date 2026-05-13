@@ -95,7 +95,7 @@ export default function SubmissionsPage() {
                   className="w-full flex items-center gap-3 text-xs text-left cursor-pointer"
                   type="button"
                 >
-                  <BankAvatar name={s.bank.name} slug={s.bank.slug} size={28} />
+                  <BankAvatar name={s.bank.name} slug={s.bank.slug} logo={s.bank.logo} size={28} />
                   <span className="text-white font-medium min-w-[100px]">{s.bank.name}</span>
                   <span className="px-2 py-0.5 bg-[#1E1E1E] rounded-full text-[#A8A29E]">
                     {s.step}

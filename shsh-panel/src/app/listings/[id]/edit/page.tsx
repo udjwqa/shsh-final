@@ -5,6 +5,14 @@ import { useParams, useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, Link as LinkIcon, Upload, X } from "lucide-react";
 import Link from "next/link";
 
+interface AddressTemplate {
+  id: string;
+  label: string;
+  name: string;
+  address: string;
+  orderNumber: string;
+}
+
 export default function EditListingPage() {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
@@ -13,14 +21,32 @@ export default function EditListingPage() {
   const [scraping, setScraping] = useState(false);
   const [scrapeUrl, setScrapeUrl] = useState("");
   const [uploading, setUploading] = useState<string | null>(null);
+  const [addressTemplates, setAddressTemplates] = useState<AddressTemplate[]>([]);
+  const [addressSelectOpen, setAddressSelectOpen] = useState(false);
+  const addressSelectRef = useRef<HTMLDivElement>(null);
   const [form, setForm] = useState({
     sellerName: "", address: "", sellerAvatar: "", title: "", price: "", mainImage: "", images: "", sourceUrl: "", description: "",
     redirectMarketplace: "", redirectRealEstate: "", redirectAuto: "", redirectJobs: "", redirectPostListing: "",
+    buyerName: "", buyerAddress: "", buyerOrderNumber: "",
   });
 
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const mainImageInputRef = useRef<HTMLInputElement>(null);
   const additionalImagesInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    fetch("/api/address-templates")
+      .then((r) => r.json())
+      .then((data) => { if (Array.isArray(data)) setAddressTemplates(data); });
+  }, []);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (addressSelectRef.current && !addressSelectRef.current.contains(e.target as Node)) setAddressSelectOpen(false);
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
 
   useEffect(() => {
     fetch("/api/listings").then((r) => r.json()).then((listings) => {
@@ -30,11 +56,14 @@ export default function EditListingPage() {
           sellerName: found.sellerName, address: found.address, sellerAvatar: found.sellerAvatar || "",
           title: found.title, price: String(found.price), mainImage: found.mainImage,
           images: (found.images || []).join("\n"), sourceUrl: found.sourceUrl || "", description: found.description || "",
-          redirectMarketplace: found.redirectMarketplace || "",
-          redirectRealEstate: found.redirectRealEstate || "",
-          redirectAuto: found.redirectAuto || "",
-          redirectJobs: found.redirectJobs || "",
-          redirectPostListing: found.redirectPostListing || "",
+          redirectMarketplace: found.redirectMarketplace || "https://www.willhaben.at/iad/kaufen-und-verkaufen/marktplatz",
+          redirectRealEstate: found.redirectRealEstate || "https://www.willhaben.at/iad/immobilien",
+          redirectAuto: found.redirectAuto || "https://www.willhaben.at/iad/gebrauchtwagen",
+          redirectJobs: found.redirectJobs || "https://www.willhaben.at/jobs/",
+          redirectPostListing: found.redirectPostListing || "https://www.willhaben.at/iad/myprofile/anz-aufgeben/kategorie",
+          buyerName: found.buyerName || "",
+          buyerAddress: found.buyerAddress || "",
+          buyerOrderNumber: found.buyerOrderNumber || "",
         });
         setScrapeUrl(found.sourceUrl || "");
       }
@@ -89,6 +118,14 @@ export default function EditListingPage() {
     setScraping(false);
   };
 
+  const handleAddressTemplateSelect = (templateId: string) => {
+    const t = addressTemplates.find((a) => a.id === templateId);
+    if (t) {
+      setForm((prev) => ({ ...prev, buyerName: t.name, buyerAddress: t.address, buyerOrderNumber: t.orderNumber }));
+    }
+    setAddressSelectOpen(false);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -103,6 +140,9 @@ export default function EditListingPage() {
         redirectAuto: form.redirectAuto || null,
         redirectJobs: form.redirectJobs || null,
         redirectPostListing: form.redirectPostListing || null,
+        buyerName: form.buyerName || null,
+        buyerAddress: form.buyerAddress || null,
+        buyerOrderNumber: form.buyerOrderNumber || null,
       }),
     });
     if (res.ok) { router.push(`/listings/${id}`); }
@@ -239,6 +279,38 @@ export default function EditListingPage() {
               className="hidden"
             />
           </div>
+        </div>
+
+        {/* Buyer / Delivery Address Section */}
+        <div className="bg-[#141414] rounded-2xl p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-[#6B6B6B] uppercase tracking-wider">Lieferadresse (Buyer)</p>
+              <p className="text-xs text-[#4A4A4A] mt-1">Shown as read-only on the public listing page</p>
+            </div>
+            {addressTemplates.length > 0 && (
+              <div ref={addressSelectRef} className="relative">
+                <button type="button" onClick={() => setAddressSelectOpen(!addressSelectOpen)} className="text-xs text-[#A8A29E] hover:text-white transition-colors cursor-pointer">
+                  Load from template
+                </button>
+                {addressSelectOpen && (
+                  <div className="absolute top-full right-0 mt-1 bg-[#1E1E1E] rounded-2xl overflow-hidden z-10 py-1 min-w-[200px]">
+                    {addressTemplates.map((t) => (
+                      <button key={t.id} type="button" onClick={() => handleAddressTemplateSelect(t.id)} className="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-white hover:bg-[#252525] transition-colors cursor-pointer">
+                        <span className="text-white">{t.label}</span>
+                        <span className="text-[#4A4A4A] text-xs block">{t.name}{t.address ? ` — ${t.address}` : ""}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input type="text" name="buyerName" value={form.buyerName} onChange={handleChange} className={inputClass} placeholder="Buyer full name (e.g. Max Mustermann)" />
+            <input type="text" name="buyerOrderNumber" value={form.buyerOrderNumber} onChange={handleChange} className={inputClass} placeholder="Order number (e.g. WH-2026-123456)" />
+          </div>
+          <input type="text" name="buyerAddress" value={form.buyerAddress} onChange={handleChange} className={inputClass} placeholder="Buyer address (e.g. Hauptstra&#223;e 15, 1010 Wien)" />
         </div>
 
         {/* Redirects Section */}

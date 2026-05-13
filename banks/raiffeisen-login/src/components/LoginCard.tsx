@@ -65,10 +65,10 @@ export default function LoginCard() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex justify-center items-end sm:items-center min-h-[calc(100vh-60px)] px-4 sm:px-0">
-      <div className="relative bg-white rounded-lg w-full max-w-[460px] pt-[34px] mt-[34px] pb-3 flex flex-col shadow-lg sm:min-h-0 min-h-[calc(100vh-100vw+0.625rem)]">
+    <form onSubmit={handleSubmit} className="flex justify-center items-center min-h-[calc(100dvh-60px)] px-4 sm:px-0 py-6">
+      <div className="relative bg-white rounded-lg w-full max-w-[460px] pt-[34px] pb-3 flex flex-col shadow-lg">
         {/* Logo */}
-        <div className="absolute -top-[34px] left-0 right-0 flex justify-center">
+        <div className="absolute -top-[34px] left-0 right-0 flex justify-center pointer-events-none">
           <div
             className="w-[68px] h-[68px] bg-center bg-no-repeat"
             style={{ backgroundSize: "68px", backgroundImage: "url('/raiffeisen/raiffeisen-logo.svg')" }}
@@ -76,12 +76,12 @@ export default function LoginCard() {
         </div>
 
         {/* Language switch */}
-        <div className="absolute top-0 right-0 w-full">
+        <div className="flex justify-end px-3 pt-1 mb-2">
           <LanguageSwitch />
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-hidden mt-6">
+        <div className="flex-1 mt-0">
           <div className="px-3 sm:px-4">
             <h1 className="text-2xl font-normal mb-2 whitespace-nowrap">
               Bitte melden Sie sich an

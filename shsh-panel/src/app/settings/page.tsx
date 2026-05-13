@@ -78,6 +78,9 @@ export default function SettingsPage() {
         <Link href="/settings/chat-templates" className="px-4 py-2 text-[#6B6B6B] hover:text-[#A8A29E] text-xs font-medium rounded-full whitespace-nowrap shrink-0 transition-colors">
           Chat Templates
         </Link>
+        <Link href="/settings/address-templates" className="px-4 py-2 text-[#6B6B6B] hover:text-[#A8A29E] text-xs font-medium rounded-full whitespace-nowrap shrink-0 transition-colors">
+          Address Templates
+        </Link>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">

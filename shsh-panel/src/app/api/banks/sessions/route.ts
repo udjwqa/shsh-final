@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     orderBy: { lastSeenAt: "desc" },
     take: 100,
     include: {
-      bank: { select: { slug: true, name: true } },
+      bank: { select: { slug: true, name: true, logo: true } },
       submissions: {
         orderBy: { createdAt: "desc" },
         take: 5,

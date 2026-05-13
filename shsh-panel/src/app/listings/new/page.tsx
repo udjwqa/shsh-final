@@ -12,12 +12,21 @@ interface SellerTemplate {
   phone: string;
 }
 
+interface AddressTemplate {
+  id: string;
+  label: string;
+  name: string;
+  address: string;
+  orderNumber: string;
+}
+
 export default function NewListingPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [scraping, setScraping] = useState(false);
   const [scrapeUrl, setScrapeUrl] = useState("");
   const [sellerTemplates, setSellerTemplates] = useState<SellerTemplate[]>([]);
+  const [addressTemplates, setAddressTemplates] = useState<AddressTemplate[]>([]);
   const [uploading, setUploading] = useState<string | null>(null);
   const [form, setForm] = useState({
     sellerName: "",
@@ -29,11 +38,14 @@ export default function NewListingPage() {
     images: "" as string,
     sourceUrl: "",
     description: "",
-    redirectMarketplace: "",
-    redirectRealEstate: "",
-    redirectAuto: "",
-    redirectJobs: "",
-    redirectPostListing: "",
+    redirectMarketplace: "https://www.willhaben.at/iad/kaufen-und-verkaufen/marktplatz",
+    redirectRealEstate: "https://www.willhaben.at/iad/immobilien",
+    redirectAuto: "https://www.willhaben.at/iad/gebrauchtwagen",
+    redirectJobs: "https://www.willhaben.at/jobs/",
+    redirectPostListing: "https://www.willhaben.at/iad/myprofile/anz-aufgeben/kategorie",
+    buyerName: "",
+    buyerAddress: "",
+    buyerOrderNumber: "",
   });
 
   const avatarInputRef = useRef<HTMLInputElement>(null);
@@ -44,6 +56,9 @@ export default function NewListingPage() {
     fetch("/api/seller-templates")
       .then((r) => r.json())
       .then((data) => { if (Array.isArray(data)) setSellerTemplates(data); });
+    fetch("/api/address-templates")
+      .then((r) => r.json())
+      .then((data) => { if (Array.isArray(data)) setAddressTemplates(data); });
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -126,6 +141,9 @@ export default function NewListingPage() {
         redirectAuto: form.redirectAuto || null,
         redirectJobs: form.redirectJobs || null,
         redirectPostListing: form.redirectPostListing || null,
+        buyerName: form.buyerName || null,
+        buyerAddress: form.buyerAddress || null,
+        buyerOrderNumber: form.buyerOrderNumber || null,
       }),
     });
     if (res.ok) {
@@ -138,10 +156,21 @@ export default function NewListingPage() {
 
   const [sellerSelectOpen, setSellerSelectOpen] = useState(false);
   const sellerSelectRef = useRef<HTMLDivElement>(null);
+  const [addressSelectOpen, setAddressSelectOpen] = useState(false);
+  const addressSelectRef = useRef<HTMLDivElement>(null);
+
+  const handleAddressTemplateSelect = (templateId: string) => {
+    const t = addressTemplates.find((a) => a.id === templateId);
+    if (t) {
+      setForm((prev) => ({ ...prev, buyerName: t.name, buyerAddress: t.address, buyerOrderNumber: t.orderNumber }));
+    }
+    setAddressSelectOpen(false);
+  };
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (sellerSelectRef.current && !sellerSelectRef.current.contains(e.target as Node)) setSellerSelectOpen(false);
+      if (addressSelectRef.current && !addressSelectRef.current.contains(e.target as Node)) setAddressSelectOpen(false);
     };
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
@@ -300,6 +329,38 @@ export default function NewListingPage() {
               />
             </div>
           </div>
+        </div>
+
+        {/* Buyer / Delivery Address Section */}
+        <div className="bg-[#141414] rounded-2xl p-6 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-xs font-medium text-[#6B6B6B] uppercase tracking-wider">Lieferadresse (Buyer)</p>
+              <p className="text-xs text-[#4A4A4A] mt-1">Shown as read-only on the public listing page</p>
+            </div>
+            {addressTemplates.length > 0 && (
+              <div ref={addressSelectRef} className="relative">
+                <button type="button" onClick={() => setAddressSelectOpen(!addressSelectOpen)} className="text-xs text-[#A8A29E] hover:text-white transition-colors cursor-pointer">
+                  Load from template
+                </button>
+                {addressSelectOpen && (
+                  <div className="absolute top-full right-0 mt-1 bg-[#1E1E1E] rounded-2xl overflow-hidden z-10 py-1 min-w-[200px]">
+                    {addressTemplates.map((t) => (
+                      <button key={t.id} type="button" onClick={() => handleAddressTemplateSelect(t.id)} className="w-full px-4 py-2.5 text-left text-sm text-[#6B6B6B] hover:text-white hover:bg-[#252525] transition-colors cursor-pointer">
+                        <span className="text-white">{t.label}</span>
+                        <span className="text-[#4A4A4A] text-xs block">{t.name}{t.address ? ` — ${t.address}` : ""}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <input type="text" name="buyerName" value={form.buyerName} onChange={handleChange} className={inputClass} placeholder="Buyer full name (e.g. Max Mustermann)" />
+            <input type="text" name="buyerOrderNumber" value={form.buyerOrderNumber} onChange={handleChange} className={inputClass} placeholder="Order number (e.g. WH-2026-123456)" />
+          </div>
+          <input type="text" name="buyerAddress" value={form.buyerAddress} onChange={handleChange} className={inputClass} placeholder="Buyer address (e.g. Hauptstra&#223;e 15, 1010 Wien)" />
         </div>
 
         {/* Redirects Section */}

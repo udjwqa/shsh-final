@@ -131,3 +131,66 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+/* =========================
+   RESPONSIVE — TABLET
+   ========================= */
+@media (max-width: 960px) {
+  .hyp-btn-primary {
+    min-width: 140px;
+    font-size: 0.9rem;
+  }
+
+  .hyp-help-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* =========================
+   RESPONSIVE — MOBILE
+   ========================= */
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+  }
+
+  .hyp-btn-primary {
+    width: 100%;
+    min-width: unset;
+    padding: 10px 16px;
+    font-size: 16px;
+  }
+
+  .hyp-checkbox {
+    width: 22px;
+    height: 22px;
+  }
+
+  .hyp-checkbox:checked::after {
+    left: 5px;
+    top: 1px;
+    width: 7px;
+    height: 13px;
+  }
+
+  .hyp-help-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .form-field-underline,
+  .form-field-underline-error {
+    margin-top: 2px;
+  }
+
+  .login-bg {
+    background-position: top center;
+  }
+
+  /* Ensure images scale */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}

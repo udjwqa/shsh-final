@@ -23,18 +23,40 @@ function initials(name: string): string {
   return words.slice(0, 3).map((w) => w[0]).join("").toUpperCase();
 }
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3001";
+
 export function BankAvatar({
   name,
   slug,
+  logo,
   size = 36,
 }: {
   name: string;
   slug: string;
+  logo?: string;
   size?: number;
 }) {
   const color = PALETTE[hash(slug) % PALETTE.length];
   const text = initials(name);
   const fontSize = text.length >= 3 ? size * 0.32 : size * 0.42;
+
+  if (logo) {
+    const src = logo.startsWith("http") ? logo : `${SITE_URL}${logo}`;
+    return (
+      <div
+        className="shrink-0 flex items-center justify-center rounded-lg overflow-hidden bg-white"
+        style={{ width: size, height: size }}
+        aria-label={name}
+      >
+        <img
+          src={src}
+          alt={name}
+          style={{ width: size - 4, height: size - 4, objectFit: "contain" }}
+          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+        />
+      </div>
+    );
+  }
 
   return (
     <div

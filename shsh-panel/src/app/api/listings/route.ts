@@ -45,6 +45,9 @@ export async function POST(req: NextRequest) {
       redirectAuto: body.redirectAuto || null,
       redirectJobs: body.redirectJobs || null,
       redirectPostListing: body.redirectPostListing || null,
+      buyerName: body.buyerName || null,
+      buyerAddress: body.buyerAddress || null,
+      buyerOrderNumber: body.buyerOrderNumber || null,
     },
   });
 

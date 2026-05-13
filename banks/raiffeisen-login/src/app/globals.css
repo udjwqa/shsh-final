@@ -187,6 +187,9 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+  min-height: 100dvh;
 }
 
 /* pushTAN countdown ring */
@@ -264,4 +267,98 @@ body {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+}
+
+/* =========================
+   RESPONSIVE: Tablet (max-width: 960px)
+   ========================= */
+@media (max-width: 960px) {
+  .raf-btn-primary {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .raf-resend-btn {
+    width: 100%;
+  }
+
+  .raf-countdown-ring {
+    width: 100px;
+    height: 100px;
+    font-size: 1.25rem;
+  }
+}
+
+/* =========================
+   RESPONSIVE: Mobile (max-width: 600px)
+   ========================= */
+@media (max-width: 600px) {
+  body {
+    font-size: 15px;
+  }
+
+  .floating-label {
+    font-size: 0.875rem;
+  }
+
+  .floating-input:focus ~ .floating-label,
+  .floating-input:not(:placeholder-shown) ~ .floating-label {
+    transform: translateY(-100%) scale(0.8);
+  }
+
+  .raf-select {
+    font-size: 16px;
+  }
+
+  .raf-btn-primary {
+    width: 100%;
+    min-width: unset;
+    padding: 10px 16px;
+    font-size: 1rem;
+  }
+
+  .raf-countdown-ring {
+    width: 80px;
+    height: 80px;
+    font-size: 1.125rem;
+    border-width: 3px;
+  }
+
+  .raf-resend-btn {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 1rem;
+  }
+
+  .raf-help-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .raf-back-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .raf-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .raf-success-check {
+    width: 64px;
+    height: 64px;
+  }
+
+  .raf-checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .raf-checkbox:checked::after {
+    left: 5px;
+    top: 1px;
+    width: 7px;
+    height: 12px;
+  }
 }

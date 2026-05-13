@@ -88,6 +88,9 @@ export default function ChatTemplatesPage() {
         <span className="px-4 py-2 bg-[#1E1E1E] text-white text-xs font-medium rounded-full whitespace-nowrap shrink-0">
           Chat Templates
         </span>
+        <Link href="/settings/address-templates" className="px-4 py-2 text-[#6B6B6B] hover:text-[#A8A29E] text-xs font-medium rounded-full whitespace-nowrap shrink-0 transition-colors">
+          Address Templates
+        </Link>
       </div>
 
       <div className="flex justify-end">

@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState } from "react";
+import { use } from "react";
 import { useRouter } from "next/navigation";
 import { useListing } from "../../../../../components/ListingContext";
 
@@ -11,20 +11,9 @@ interface PageProps {
 export default function AddressPage({ params }: PageProps) {
   const { slug } = use(params);
   const router = useRouter();
-  const { addressData, setAddressData } = useListing();
-
-  const [address, setAddress] = useState(addressData.address);
-  const [fullName, setFullName] = useState(addressData.fullName);
-  const [orderNumber, setOrderNumber] = useState(addressData.orderNumber);
-  const [saveAddress, setSaveAddress] = useState(false);
+  const { addressData } = useListing();
 
   const handleBack = () => {
-    router.push(`/iad/kaufen-und-verkaufen/d/${slug}`);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setAddressData({ address, fullName, orderNumber });
     router.push(`/iad/kaufen-und-verkaufen/d/${slug}`);
   };
 
@@ -36,75 +25,48 @@ export default function AddressPage({ params }: PageProps) {
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6"/>
           </svg>
-          Zurück
+          Zur&#252;ck
         </button>
       </div>
 
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label className="form-label" htmlFor="address">
-            Adresse <span className="optional">(optional)</span>
-          </label>
-          <input
-            id="address"
-            type="text"
-            className="form-input"
-            placeholder="Straße, Hausnummer, Wohnung..."
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "16px", marginTop: "16px" }}>
+        {addressData.fullName ? (
+          <>
+            <div className="form-group">
+              <label className="form-label">Vollst&#228;ndiger Name</label>
+              <div className="form-input" style={{ background: "#f5f5f5", color: "#333", cursor: "default" }}>
+                {addressData.fullName}
+              </div>
+            </div>
 
-        <div className="form-row">
-          <div className="form-group">
-            <label className="form-label" htmlFor="fullName">
-              Vollständiger Name
-            </label>
-            <input
-              id="fullName"
-              type="text"
-              className="form-input"
-              placeholder="Max Mustermann"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <label className="form-label" htmlFor="orderNumber">
-              Bestellnummer
-            </label>
-            <input
-              id="orderNumber"
-              type="text"
-              className="form-input"
-              placeholder="Bestellnr."
-              value={orderNumber}
-              onChange={(e) => setOrderNumber(e.target.value)}
-            />
-          </div>
-        </div>
+            {addressData.address && (
+              <div className="form-group">
+                <label className="form-label">Adresse</label>
+                <div className="form-input" style={{ background: "#f5f5f5", color: "#333", cursor: "default" }}>
+                  {addressData.address}
+                </div>
+              </div>
+            )}
 
-        <label className="form-checkbox-row">
-          <input
-            type="checkbox"
-            className="form-checkbox"
-            checked={saveAddress}
-            onChange={(e) => setSaveAddress(e.target.checked)}
-          />
-          <span className="form-checkbox-label">
-            Adresse für den nächsten Einkauf speichern
-          </span>
-        </label>
+            {addressData.orderNumber && (
+              <div className="form-group">
+                <label className="form-label">Bestellnummer</label>
+                <div className="form-input" style={{ background: "#f5f5f5", color: "#333", cursor: "default" }}>
+                  {addressData.orderNumber}
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <p style={{ color: "#999", fontSize: "14px" }}>Keine Lieferadresse angegeben</p>
+        )}
+      </div>
 
-        <div className="form-actions">
-          <button type="button" className="btn-secondary" onClick={handleBack}>
-            Zurück
-          </button>
-          <button type="submit" className="btn-primary">
-            Speichern
-          </button>
-        </div>
-      </form>
+      <div className="form-actions" style={{ marginTop: "24px" }}>
+        <button type="button" className="btn-primary" onClick={handleBack}>
+          Zur&#252;ck
+        </button>
+      </div>
     </main>
   );
 }
